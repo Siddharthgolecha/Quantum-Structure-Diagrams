@@ -1,0 +1,23 @@
+[project]
+name = "hld"
+version = "0.1.0"
+description = "Hilbert Lattice Diagram (HLD): Structured visualization and quantitative analysis of quantum statevectors."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+  {name = "Siddharth Golecha"},
+]
+requires-python = ">=3.8"
+dependencies = [
+  "numpy",
+  "matplotlib",
+]
+
+[project.urls]
+Homepage = "https://github.com/Siddharthgolecha/hilbert-lattice-diagram"
+Source = "https://github.com/Siddharthgolecha/hilbert-lattice-diagram/hld"
+Issues = "https://github.com/Siddharthgolecha/hilbert-lattice-diagram/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: "Hilbert Lattice Diagram (HLD)"
+message: "If you use HLD in academic work, please cite:"
+authors:
+  - family-names: Golecha
+    given-names: Siddharth
+version: "0.1.0"
+license: MIT
