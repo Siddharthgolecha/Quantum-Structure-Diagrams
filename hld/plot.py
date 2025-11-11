@@ -43,6 +43,30 @@ def _normalize_text(s):
          .replace("\u2014", "-")  # em dash
     )
 
+# ---------------- Optional Column Trimming (Preserve original indices) ----------------
+def _trim_empty_columns(rows, eps=1e-12):
+    """
+    Remove columns with no nonzero amplitudes, but preserve the *original*
+    column indices in the tick labels.
+    """
+    ncols = len(rows[0])
+    # Determine which columns have any amplitude
+    keep = [
+        any((cell is not None) and (abs(cell) > eps) for row in rows for cell in [row[c]])
+        for c in range(ncols)
+    ]
+
+    # If all empty or already dense, return unchanged
+    if not any(keep):
+        return rows, list(range(ncols))
+
+    # Filter rows
+    new_rows = [[cell for cell, k in zip(row, keep) if k] for row in rows]
+
+    # Preserve original indices for axis tick labels
+    kept_indices = [i for i, k in enumerate(keep) if k]
+    return new_rows, kept_indices
+
 
 # ---------------------------------------------------------------------------
 # Legend Helpers
@@ -123,7 +147,8 @@ def plot_hld(
     show_legend=True,
     legend_kind="phase",   # 'phase' | 'both' | 'none'
     min_height_in=3.0,
-    style: str = "default",   # <-- NEW
+    style: str = "default",
+    trim_empty: bool = None,
 ):
     with _rc_context(style):
         # ---------------- Lattice construction & pruning ------------------------
@@ -136,7 +161,14 @@ def plot_hld(
         max_len = max(len(r) for r in rows)
         rows = [r + [None]*(max_len - len(r)) for r in rows]
 
-        nrows, ncols = len(rows), max_len
+        # Apply trimming if enabled
+        if trim_empty:
+            rows, kept_indices = _trim_empty_columns(rows, EPS)
+        else:
+            kept_indices = list(range(max_len))
+
+        nrows = len(rows)
+        ncols = len(rows[0]) if rows else 1
 
         # ---------------- Base Figure Setup -------------------------------------
         fig_w = max(ncols * 0.8 + 1.4, 3.8)
@@ -177,7 +209,7 @@ def plot_hld(
         ax.set_ylim(0, nrows)
         ax.set_xticks(np.arange(ncols)+0.5)
         ax.set_yticks(np.arange(nrows)+0.5)
-        ax.set_xticklabels(list(map(str, range(ncols))))
+        ax.set_xticklabels([str(i) for i in kept_indices])
         ax.set_yticklabels(list(map(str, range(nrows))))
 
         ax.set_xticks(np.arange(ncols+1), minor=True)
