@@ -69,6 +69,17 @@ def _trim_empty_columns(rows, eps=1e-12):
     kept_indices = [i for i, k in enumerate(keep) if k]
     return new_rows, kept_indices
 
+def _idx_to_ket(index: int, dims):
+    total = np.prod(dims)
+    if index >= total:
+        return "|?⟩"  # fallback
+    digits = []
+    n = index
+    for base in reversed(dims):
+        digits.append(n % base)
+        n //= base
+    digits.reverse()
+    return "|" + "".join(str(d) for d in digits) + "⟩"
 
 # ---------------------------------------------------------------------------
 # Legend Helpers
@@ -99,9 +110,10 @@ def _add_phase_legend_outside(
     axl.set_axis_off()
     axl.set_aspect("equal", adjustable="box")
 
+    sat = 0.85 if (fig.get_facecolor()[0] > 0.9) else 1.0
     for deg in range(360):
         hue = (deg / 360.0 + _HUE_OFFSET) % 1.0
-        color = hsv_to_rgb([hue, 1.0, 1.0])
+        color = hsv_to_rgb([hue, sat, 1.0])
         axl.add_patch(Wedge((0.5, 0.5), 0.48, deg, deg + 1,
                             width=0.18, facecolor=color, edgecolor=color, linewidth=0))
 
@@ -152,12 +164,19 @@ def plot_hld(
     min_height_in=3.0,
     style: str = "default",
     trim_empty: bool = None,
+    annotate_basis: bool = True,         # NEW: turn labels on/off
+    annotate_threshold: float = 0.04,    # NEW: min relative |amp| to annotate
 ):
     with _rc_context(style):
         # ---------------- Lattice construction & pruning ------------------------
-        _, rows = build_hld_lattice(psi, dims, grouping, ordering)
+        try:
+            _, rows, index_rows = build_hld_lattice(psi, dims, grouping, ordering, return_indices=True)
+        except TypeError:
+            # Legacy: (ordered, rows) only
+            _, rows = build_hld_lattice(psi, dims, grouping, ordering)
+            index_rows = None
         EPS = 1e-12
-
+        trim_empty = len(dims) > 2
         # Keep a record of the ORIGINAL row indices before pruning,
         # so labels show the true group index (e.g., Hamming weight).
         keep_row_mask = [
@@ -166,20 +185,26 @@ def plot_hld(
         ]
         kept_row_labels = [i for i, keep in enumerate(keep_row_mask) if keep]
         rows = [row for row, keep in zip(rows, keep_row_mask) if keep]
+        index_rows = [ir for ir, keep in zip(index_rows or [[]]*len(keep_row_mask), keep_row_mask) if keep]
 
         # If everything was empty (shouldn't happen for valid psi), keep one empty row
         if not rows:
             rows = [[]]
+            index_rows = [[]]
             kept_row_labels = [0]
 
         max_len = max(len(r) for r in rows)
         rows = [r + [None] * (max_len - len(r)) for r in rows]
+        index_rows = [ir + [None] * (max_len - len(ir)) for ir in (index_rows or [[]])]
         
         # Apply trimming if enabled
         if trim_empty:
             rows, kept_indices = _trim_empty_columns(rows, EPS)
+            if index_rows:
+                index_rows = [[cell for cell, k in zip(ir, [c in kept_indices for c in range(max_len)]) if k] for ir in index_rows]
         else:
             kept_indices = list(range(max_len))
+
         nrows, ncols = len(rows), max_len
 
         # ---------------- Base Figure Setup -------------------------------------
@@ -199,7 +224,8 @@ def plot_hld(
         ax.tick_params(colors=label_color)
         ax.xaxis.label.set_color(label_color)
         ax.yaxis.label.set_color(label_color)
-        for s in ax.spines.values(): s.set_color(label_color)
+        for s in ax.spines.values():
+            s.set_color(label_color)
 
         # ---------------- Draw Cells -------------------------------------------
         gmax = float(np.max(np.abs(psi))) if np.max(np.abs(psi)) > 0 else 1.0
@@ -207,15 +233,40 @@ def plot_hld(
             for c, amp in enumerate(row):
                 if amp is None or abs(amp) <= EPS:
                     continue
+
                 mag = abs(amp) / gmax
                 phi = np.angle(amp)
                 hue = ((phi / (2 * np.pi)) + _HUE_OFFSET) % 1.0
-                # For paper style, you can soften saturation/value slightly; keep vivid otherwise.
+
+                # Adjust saturation/value for paper style
                 if (style or "").lower() == "paper":
                     rgb = hsv_to_rgb([hue, mag * 0.85, mag * 0.95])
                 else:
                     rgb = hsv_to_rgb([hue, mag, mag])
+
                 ax.add_patch(Rectangle((c, r), 1, 1, color=rgb, linewidth=0))
+
+                # --- Annotate basis label (if indices available & amplitude big enough)
+                if annotate_basis and index_rows and index_rows[r][c] is not None:
+                    if mag >= annotate_threshold:
+                        basis_idx = index_rows[r][c]
+                        label = _idx_to_ket(basis_idx, dims)
+
+                        # Phase-based text color:
+                        # White for 0 ≤ φ < π, black for π ≤ φ < 2π
+                        phi_mod = (phi + 2 * np.pi) % (2 * np.pi)
+                        txt_color = "white" if phi_mod < np.pi else "black"
+
+                        fontsize = 9 if (style or "").lower() == "paper" else 10
+                        ax.text(
+                            c + 0.5, r + 0.5, label,
+                            ha="center", va="center",
+                            color=txt_color,
+                            fontsize=fontsize,
+                            fontweight="semibold",
+                            alpha=0.9 if (style or "").lower() == "paper" else 1.0,
+                            clip_on=True,
+                        )
 
         ax.set_aspect("equal")
         ax.set_xlim(0, ncols)
@@ -228,7 +279,7 @@ def plot_hld(
 
         ax.set_xticks(np.arange(ncols+1), minor=True)
         ax.set_yticks(np.arange(nrows+1), minor=True)
-        ax.grid(which="minor", color=grid_color, alpha=0.08, linewidth=0.5)
+        ax.grid(which="minor", color=grid_color, alpha=0.08, linewidth=0.4)
         ax.tick_params(which="minor", length=0)
 
         # ---------------- Reserve Space Layout ----------------------------------
