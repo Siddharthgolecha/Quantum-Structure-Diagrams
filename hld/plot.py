@@ -27,6 +27,8 @@ PAPER_RC = {
     "savefig.dpi": 300,
 }
 
+_HUE_OFFSET = 2.0 / 3.0   # 0.666..., HSV hue for blue
+
 def _rc_context(style: str):
     return mpl.rc_context(PAPER_RC) if (style or "").lower() == "paper" else nullcontext()
 
@@ -98,7 +100,8 @@ def _add_phase_legend_outside(
     axl.set_aspect("equal", adjustable="box")
 
     for deg in range(360):
-        color = hsv_to_rgb([deg / 360.0, 1.0, 1.0])
+        hue = (deg / 360.0 + _HUE_OFFSET) % 1.0
+        color = hsv_to_rgb([hue, 1.0, 1.0])
         axl.add_patch(Wedge((0.5, 0.5), 0.48, deg, deg + 1,
                             width=0.18, facecolor=color, edgecolor=color, linewidth=0))
 
@@ -154,21 +157,30 @@ def plot_hld(
         # ---------------- Lattice construction & pruning ------------------------
         _, rows = build_hld_lattice(psi, dims, grouping, ordering)
         EPS = 1e-12
-        rows = [row for row in rows if any((amp is not None) and (abs(amp) > EPS) for amp in row)]
+
+        # Keep a record of the ORIGINAL row indices before pruning,
+        # so labels show the true group index (e.g., Hamming weight).
+        keep_row_mask = [
+            any((amp is not None) and (abs(amp) > EPS) for amp in row)
+            for row in rows
+        ]
+        kept_row_labels = [i for i, keep in enumerate(keep_row_mask) if keep]
+        rows = [row for row, keep in zip(rows, keep_row_mask) if keep]
+
+        # If everything was empty (shouldn't happen for valid psi), keep one empty row
         if not rows:
             rows = [[]]
+            kept_row_labels = [0]
 
         max_len = max(len(r) for r in rows)
-        rows = [r + [None]*(max_len - len(r)) for r in rows]
-
+        rows = [r + [None] * (max_len - len(r)) for r in rows]
+        
         # Apply trimming if enabled
         if trim_empty:
             rows, kept_indices = _trim_empty_columns(rows, EPS)
         else:
             kept_indices = list(range(max_len))
-
-        nrows = len(rows)
-        ncols = len(rows[0]) if rows else 1
+        nrows, ncols = len(rows), max_len
 
         # ---------------- Base Figure Setup -------------------------------------
         fig_w = max(ncols * 0.8 + 1.4, 3.8)
@@ -196,7 +208,8 @@ def plot_hld(
                 if amp is None or abs(amp) <= EPS:
                     continue
                 mag = abs(amp) / gmax
-                hue = (np.angle(amp) + np.pi) / (2 * np.pi)
+                phi = np.angle(amp)
+                hue = ((phi / (2 * np.pi)) + _HUE_OFFSET) % 1.0
                 # For paper style, you can soften saturation/value slightly; keep vivid otherwise.
                 if (style or "").lower() == "paper":
                     rgb = hsv_to_rgb([hue, mag * 0.85, mag * 0.95])
@@ -210,7 +223,8 @@ def plot_hld(
         ax.set_xticks(np.arange(ncols)+0.5)
         ax.set_yticks(np.arange(nrows)+0.5)
         ax.set_xticklabels([str(i) for i in kept_indices])
-        ax.set_yticklabels(list(map(str, range(nrows))))
+        # y labels: preserve the ORIGINAL row indices (e.g., 0 and 3 for GHZ(3))
+        ax.set_yticklabels([str(i) for i in kept_row_labels])
 
         ax.set_xticks(np.arange(ncols+1), minor=True)
         ax.set_yticks(np.arange(nrows+1), minor=True)
