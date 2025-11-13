@@ -93,7 +93,7 @@ def build_hld_lattice(psi, dims, grouping="hamming", ordering="lex", return_indi
         basis_str = int_to_str(i)
         if grouping == "hamming":
             # excitation number (nonzero digits)
-            key = sum(ch != "0" for ch in basis_str)
+            key = sum(int(ch) for ch in basis_str)
         else:
             key = 0
         grouped.setdefault(key, []).append((i, basis_str))
