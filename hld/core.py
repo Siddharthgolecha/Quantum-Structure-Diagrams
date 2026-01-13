@@ -3,6 +3,13 @@ from itertools import product
 import numpy as np
 
 
+def ragged_to_padded(rows, pad_value=np.nan):
+    max_len = max(len(r) for r in rows) if rows else 0
+    mat = np.full((len(rows), max_len), pad_value, dtype=complex)
+    for i, r in enumerate(rows):
+        mat[i, :len(r)] = r
+    return mat
+
 def group_basis_states(dims, grouping="hamming"):
     """
     Returns a dictionary mapping group labels (rows) → list of basis state indices.
@@ -43,7 +50,7 @@ def order_basis_states(grouped_states, ordering="lex"):
     return ordered
 
 
-def build_hld_lattice(psi, dims, grouping="hamming", ordering="lex", return_indices=False):
+def build_qsd_lattice(psi, dims, grouping="hamming", ordering="lex", return_indices=False):
     """
     Convert a statevector `psi` into a ragged 2D array of complex amplitudes
     grouped by subspace (e.g., excitation number) and ordered within each group.
@@ -93,7 +100,7 @@ def build_hld_lattice(psi, dims, grouping="hamming", ordering="lex", return_indi
         basis_str = int_to_str(i)
         if grouping == "hamming":
             # excitation number (nonzero digits)
-            key = sum(int(ch) for ch in basis_str)
+            key = sum(1 for ch in basis_str if ch != "0")
         else:
             key = 0
         grouped.setdefault(key, []).append((i, basis_str))
@@ -116,4 +123,9 @@ def build_hld_lattice(psi, dims, grouping="hamming", ordering="lex", return_indi
         rows.append(row)
         index_rows.append(indices)
 
-    return (ordered, rows, index_rows) if return_indices else (ordered, rows)
+    # ---------------- Flat display order (row-major) ----------------
+    flat_indices = [i for row in index_rows for i in row]
+    psi_perm = psi[flat_indices]
+
+    return (ordered, rows, index_rows, flat_indices, psi_perm) if return_indices else (ordered, rows)
+

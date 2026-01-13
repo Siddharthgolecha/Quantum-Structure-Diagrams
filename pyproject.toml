@@ -1,7 +1,7 @@
 [project]
-name = "hld"
+name = "qsd"
 version = "0.1.0"
-description = "Hilbert Lattice Diagram (HLD): Structured visualization and quantitative analysis of quantum statevectors."
+description = "Quantum Structure Diagrams (QSD): Structured visualization and quantitative analysis of quantum statevectors."
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -15,7 +15,7 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/Siddharthgolecha/hilbert-lattice-diagram"
-Source = "https://github.com/Siddharthgolecha/hilbert-lattice-diagram/hld"
+Source = "https://github.com/Siddharthgolecha/hilbert-lattice-diagram/qsd"
 Issues = "https://github.com/Siddharthgolecha/hilbert-lattice-diagram/issues"
 
 [build-system]

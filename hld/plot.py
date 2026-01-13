@@ -6,8 +6,8 @@ import numpy as np
 from matplotlib.colors import hsv_to_rgb
 from matplotlib.patches import Rectangle, Wedge
 
-from .core import build_hld_lattice
-from .metrics import compute_hld_metrics
+from .core import build_qsd_lattice
+from .metrics import compute_qsd_metrics
 
 # -------------------- Paper style (only used when style="paper") --------------------
 
@@ -150,7 +150,7 @@ def _add_magnitude_legend_below(fig, ring_ax, theme="dark"):
 # Main Plot Function
 # ---------------------------------------------------------------------------
 
-def plot_hld(
+def plot_qsd(
     psi,
     dims,
     grouping="hamming",
@@ -164,19 +164,20 @@ def plot_hld(
     min_height_in=3.0,
     style: str = "default",
     trim_empty: bool = None,
-    annotate_basis: bool = True,         # NEW: turn labels on/off
-    annotate_threshold: float = 0.04,    # NEW: min relative |amp| to annotate
+    annotate_basis: bool = True,
+    annotate_threshold: float = 0.04,
 ):
     with _rc_context(style):
         # ---------------- Lattice construction & pruning ------------------------
         try:
-            _, rows, index_rows = build_hld_lattice(psi, dims, grouping, ordering, return_indices=True)
+            _, rows, index_rows, _, _ = build_qsd_lattice(psi, dims, grouping, ordering, return_indices=True)
         except TypeError:
             # Legacy: (ordered, rows) only
-            _, rows = build_hld_lattice(psi, dims, grouping, ordering)
+            _, rows = build_qsd_lattice(psi, dims, grouping, ordering)
             index_rows = None
         EPS = 1e-12
-        trim_empty = len(dims) > 2
+        if trim_empty is None:
+            trim_empty = (len(dims) > 2)
         # Keep a record of the ORIGINAL row indices before pruning,
         # so labels show the true group index (e.g., Hamming weight).
         keep_row_mask = [
@@ -195,7 +196,10 @@ def plot_hld(
 
         max_len = max(len(r) for r in rows)
         rows = [r + [None] * (max_len - len(r)) for r in rows]
-        index_rows = [ir + [None] * (max_len - len(ir)) for ir in (index_rows or [[]])]
+        if index_rows is None:
+            index_rows = [[None] * max_len for _ in range(len(rows))]
+        else:
+            index_rows = [ir + [None] * (max_len - len(ir)) for ir in index_rows]
         
         # Apply trimming if enabled
         if trim_empty:
@@ -205,7 +209,8 @@ def plot_hld(
         else:
             kept_indices = list(range(max_len))
 
-        nrows, ncols = len(rows), max_len
+        nrows = len(rows)
+        ncols = len(rows[0]) if rows and rows[0] is not None else 0
 
         # ---------------- Base Figure Setup -------------------------------------
         fig_w = max(ncols * 0.8 + 1.4, 3.8)
@@ -317,11 +322,11 @@ def plot_hld(
         title_ax.set_axis_off()
 
         if show_metrics:
-            m = compute_hld_metrics(psi, dims)
+            m = compute_qsd_metrics(psi, dims)
             title_text = (
-                f"Global coherence: {m['global_coherence_spectrum']:.3f} |  "
-                f"Entanglement visibility: {m['entanglement_visibility_index']:.3f}"
-            )
+                    f"Global coherence: {m['global_coherence_index']:.3f} |  "
+                    f"Bipartite entanglement (lin.): {m['bipartite_entanglement_linear']['value']:.3f}"
+                )
             # normalize to avoid U+2011 warnings
             title_text = _normalize_text(title_text)
             title_ax.text(0.5, 0.5, title_text, ha="center", va="center",
@@ -374,6 +379,6 @@ def plot_hld(
             plt.show()
 
 
-def analyze_and_plot_hld(psi, dims, **kwargs):
-    plot_hld(psi, dims, **kwargs)
-    return compute_hld_metrics(psi, dims)
+def analyze_and_plot_qsd(psi, dims, **kwargs):
+    plot_qsd(psi, dims, **kwargs)
+    return compute_qsd_metrics(psi, dims)

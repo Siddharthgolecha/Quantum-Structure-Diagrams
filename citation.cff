@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-title: "Hilbert Lattice Diagram (HLD)"
-message: "If you use HLD in academic work, please cite:"
+title: "Quantum Structure Diagrams (QSD)"
+message: "If you use QSD in academic work, please cite:"
 authors:
   - family-names: Golecha
     given-names: Siddharth

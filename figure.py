@@ -1,32 +1,81 @@
+import json
+
 import numpy as np
+from qsd import analyze_and_plot_qsd
 
-from hld import analyze_and_plot_hld
 
-# GHZ (3 qubits)
-psi_ghz = np.zeros(8, dtype=complex); psi_ghz[0]=psi_ghz[7]=1/np.sqrt(2)
-analyze_and_plot_hld(psi_ghz, dims=[2,2,2], theme="light", show_metrics=True,
-                     save_path="./figures/ghz_hld_light.png",
-                     caption="HLD of GHZ; hue=phase, brightness=|amp|.",
-                     style="paper")
+def run_example(name, psi, dims, *, save_path, caption):
+    """Run QSD analysis, plot the figure, and persist metrics to disk."""
+    metrics = analyze_and_plot_qsd(
+        psi,
+        dims=dims,
+        theme="light",
+        show_metrics=True,
+        save_path=save_path,
+        caption=caption,
+        style="paper",
+    )
 
-# W (3 qubits)
-psi_w = np.zeros(8, dtype=complex); psi_w[1]=psi_w[2]=psi_w[4]=1/np.sqrt(3)
-analyze_and_plot_hld(psi_w, dims=[2,2,2], theme="light", show_metrics=True,
-                     save_path="./figures/w_hld_light.png",
-                     caption="HLD of W state; single-excitation layer visualized.",
-                     style="paper")
+    metrics_path = f"./figures/{name}_metrics.json"
+    with open(metrics_path, "w") as handle:
+        json.dump(metrics, handle, indent=2, sort_keys=True)
 
-# Qutrit Bell-like (2 qutrits)
-psi_qut = np.zeros(9, dtype=complex); psi_qut[0]=psi_qut[8]=1/np.sqrt(2)
-analyze_and_plot_hld(psi_qut, dims=[3,3], theme="light", show_metrics=True,
-                     save_path="./figures/qutrit_bell_hld_light.png",
-                     caption="HLD of two-qutrit Bell-like state.",
-                     style="paper")
+    print(f"{name} metrics:")
+    print(json.dumps(metrics, indent=2, sort_keys=True))
 
-# Haar-random 3-qubit
+# GHZ (3 qubits): (|000> + |111>) / sqrt(2)
+psi_ghz = np.zeros(8, dtype=complex)
+psi_ghz[0] = psi_ghz[7] = 1 / np.sqrt(2)
+run_example(
+    "ghz_qsd_light",
+    psi_ghz,
+    dims=[2, 2, 2],
+    save_path="./figures/ghz_qsd_light.png",
+    caption="QSD of GHZ; hue=phase, brightness=|amp|.",
+)
+
+# Psi-minus Bell state (2 qubits): (|01> - |10>) / sqrt(2)
+psi_minus = np.zeros(4, dtype=complex)
+psi_minus[1] = 1 / np.sqrt(2)
+psi_minus[2] = -1 / np.sqrt(2)
+run_example(
+    "psi_minus_bell_qsd_light",
+    psi_minus,
+    dims=[2, 2],
+    save_path="./figures/psi_minus_bell_qsd_light.png",
+    caption="QSD of Bell state |Psi->; hue=phase, brightness=|amp|.",
+)
+
+# W (3 qubits): (|001> + |010> + |100>) / sqrt(3)
+psi_w = np.zeros(8, dtype=complex)
+psi_w[1] =  psi_w[2] = psi_w[4] = 1 / np.sqrt(3)
+run_example(
+    "w_qsd_light",
+    psi_w,
+    dims=[2, 2, 2],
+    save_path="./figures/w_qsd_light.png",
+    caption="QSD of W state; single-excitation layer visualized.",
+)
+
+# Qutrit Bell-like (2 qutrits): (|00> + |22>) / sqrt(2)
+psi_qut = np.zeros(9, dtype=complex)
+psi_qut[0] = psi_qut[8] = 1 / np.sqrt(2)
+run_example(
+    "qutrit_bell_qsd_light",
+    psi_qut,
+    dims=[3, 3],
+    save_path="./figures/qutrit_bell_qsd_light.png",
+    caption="QSD of two-qutrit Bell-like state.",
+)
+
+# Haar-random 3-qubit example (fixed seed for reproducibility)
 np.random.seed(7)
-psi_rand = np.random.randn(8)+1j*np.random.randn(8); psi_rand/=np.linalg.norm(psi_rand)
-analyze_and_plot_hld(psi_rand, dims=[2,2,2], theme="light", show_metrics=True,
-                     save_path="./figures/haar3_hld_light.png",
-                     caption="Haar-random 3-qubit state.",
-                     style="paper")
+psi_rand = np.random.randn(8) + 1j * np.random.randn(8)
+psi_rand /= np.linalg.norm(psi_rand)
+run_example(
+    "haar3_qsd_light",
+    psi_rand,
+    dims=[2, 2, 2],
+    save_path="./figures/haar3_qsd_light.png",
+    caption="Haar-random 3-qubit state.",
+)

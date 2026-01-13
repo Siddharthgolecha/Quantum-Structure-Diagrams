@@ -1,0 +1,46 @@
+{
+  "bipartite_entanglement_linear": {
+    "d_A": 2.0,
+    "purity": 0.5555555555555559,
+    "value": 0.8888888888888882
+  },
+  "global_coherence_index": 1.0,
+  "inter_row_phase_correlation": [
+    [
+      1.0000000000000002
+    ]
+  ],
+  "inter_row_phase_offset": [
+    [
+      0.0
+    ]
+  ],
+  "meta": {
+    "A_subsystems": [
+      0
+    ],
+    "dims": [
+      2,
+      2,
+      2
+    ],
+    "grouping": "hamming",
+    "ordering": "lex"
+  },
+  "row_amplitude_entropy": {
+    "1": 1.584962500721156
+  },
+  "row_coherence": {
+    "1": 1.0
+  },
+  "row_delocalization": 0.0,
+  "row_keys": [
+    "1"
+  ],
+  "row_probabilities": {
+    "1": 1.0000000000000002
+  },
+  "row_sizes": {
+    "1": 3
+  }
+}
