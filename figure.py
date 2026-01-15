@@ -1,20 +1,26 @@
 import json
 
 import numpy as np
+
 from qsd import analyze_and_plot_qsd
 
 
-def run_example(name, psi, dims, *, save_path, caption):
+def run_example(name, psi, dims, *, save_path, caption, grouping=None, ordering=None):
     """Run QSD analysis, plot the figure, and persist metrics to disk."""
-    metrics = analyze_and_plot_qsd(
-        psi,
-        dims=dims,
-        theme="light",
-        show_metrics=True,
-        save_path=save_path,
-        caption=caption,
-        style="paper",
-    )
+    plot_kwargs = {
+        "dims": dims,
+        "theme": "light",
+        "show_metrics": True,
+        "save_path": save_path,
+        "caption": caption,
+        "style": "paper",
+    }
+    if grouping is not None:
+        plot_kwargs["grouping"] = grouping
+    if ordering is not None:
+        plot_kwargs["ordering"] = ordering
+
+    metrics = analyze_and_plot_qsd(psi, **plot_kwargs)
 
     metrics_path = f"./figures/{name}_metrics.json"
     with open(metrics_path, "w") as handle:
@@ -43,7 +49,7 @@ run_example(
     psi_minus,
     dims=[2, 2],
     save_path="./figures/psi_minus_bell_qsd_light.png",
-    caption="QSD of Bell state |Psi->; hue=phase, brightness=|amp|.",
+    caption=r"QSD of Bell state $|\Psi-\rangle$; hue=phase, brightness=|amp|.",
 )
 
 # W (3 qubits): (|001> + |010> + |100>) / sqrt(3)
@@ -65,7 +71,8 @@ run_example(
     psi_qut,
     dims=[3, 3],
     save_path="./figures/qutrit_bell_qsd_light.png",
-    caption="QSD of two-qutrit Bell-like state.",
+    caption="QSD of two-qutrit Bell-like state (row = sum of levels).",
+    grouping="levelsum",
 )
 
 # Haar-random 3-qubit example (fixed seed for reproducibility)

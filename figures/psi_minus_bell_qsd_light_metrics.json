@@ -1,0 +1,83 @@
+{
+  "aligned_separability_test": {
+    "d_A": 2,
+    "d_B": 2,
+    "rank_one": false,
+    "sigma_ratio": 1.0
+  },
+  "bipartite_entanglement_linear": {
+    "d_A": 2.0,
+    "purity": 0.5000000000000002,
+    "value": 0.9999999999999996
+  },
+  "haar_baselines": {
+    "0": {
+      "E_P_row": 0.25,
+      "E_S_amp": 0.0,
+      "E_sum_p2": 1.0,
+      "N_r": 1.0,
+      "Var_P_row": 0.0375
+    },
+    "1": {
+      "E_P_row": 0.5,
+      "E_S_amp": 0.7213475204444817,
+      "E_sum_p2": 0.6666666666666666,
+      "N_r": 2.0,
+      "Var_P_row": 0.05
+    },
+    "2": {
+      "E_P_row": 0.25,
+      "E_S_amp": 0.0,
+      "E_sum_p2": 1.0,
+      "N_r": 1.0,
+      "Var_P_row": 0.0375
+    }
+  },
+  "meta": {
+    "A_subsystems": [
+      0
+    ],
+    "dims": [
+      2,
+      2
+    ],
+    "eps": 1e-15,
+    "grouping_requested": "hamming",
+    "grouping_resolved": "excitation",
+    "ordering_requested": "lex",
+    "ordering_resolved": "lex"
+  },
+  "row_amplitude_entropy": {
+    "1": 1.0
+  },
+  "row_collision_entropy": {
+    "1": 1.0
+  },
+  "row_delocalization": 0.0,
+  "row_effective_support": {
+    "1": 2.0
+  },
+  "row_keys": [
+    "1"
+  ],
+  "row_nonzero_count": {
+    "1": 2
+  },
+  "row_participation_ratio": {
+    "1": 2.0
+  },
+  "row_partition_sizes_all": {
+    "0": 1,
+    "1": 2,
+    "2": 1
+  },
+  "row_phase_alignment": {
+    "1": 0.0
+  },
+  "row_probabilities": {
+    "1": 1.0000000000000002
+  },
+  "row_sizes": {
+    "1": 2
+  }
+}

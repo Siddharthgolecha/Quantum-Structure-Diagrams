@@ -1,0 +1,108 @@
+{
+  "aligned_separability_test": {
+    "d_A": 3,
+    "d_B": 3,
+    "rank_one": false,
+    "sigma_ratio": 1.0
+  },
+  "bipartite_entanglement_linear": {
+    "d_A": 3.0,
+    "purity": 0.5000000000000002,
+    "value": 0.7499999999999997
+  },
+  "haar_baselines": {
+    "0": {
+      "E_P_row": 0.1111111111111111,
+      "E_S_amp": 0.0,
+      "E_sum_p2": 1.0,
+      "N_r": 1.0,
+      "Var_P_row": 0.009876543209876543
+    },
+    "1": {
+      "E_P_row": 0.2222222222222222,
+      "E_S_amp": 0.7213475204444817,
+      "E_sum_p2": 0.6666666666666666,
+      "N_r": 2.0,
+      "Var_P_row": 0.01728395061728395
+    },
+    "2": {
+      "E_P_row": 0.3333333333333333,
+      "E_S_amp": 1.2022458674074694,
+      "E_sum_p2": 0.5,
+      "N_r": 3.0,
+      "Var_P_row": 0.022222222222222223
+    },
+    "3": {
+      "E_P_row": 0.2222222222222222,
+      "E_S_amp": 0.7213475204444817,
+      "E_sum_p2": 0.6666666666666666,
+      "N_r": 2.0,
+      "Var_P_row": 0.01728395061728395
+    },
+    "4": {
+      "E_P_row": 0.1111111111111111,
+      "E_S_amp": 0.0,
+      "E_sum_p2": 1.0,
+      "N_r": 1.0,
+      "Var_P_row": 0.009876543209876543
+    }
+  },
+  "meta": {
+    "A_subsystems": [
+      0
+    ],
+    "dims": [
+      3,
+      3
+    ],
+    "eps": 1e-15,
+    "grouping_requested": "levelsum",
+    "grouping_resolved": "levelsum",
+    "ordering_requested": "lex",
+    "ordering_resolved": "lex"
+  },
+  "row_amplitude_entropy": {
+    "0": -0.0,
+    "4": -0.0
+  },
+  "row_collision_entropy": {
+    "0": -0.0,
+    "4": -0.0
+  },
+  "row_delocalization": 0.4999999999999998,
+  "row_effective_support": {
+    "0": 1.0,
+    "4": 1.0
+  },
+  "row_keys": [
+    "0",
+    "4"
+  ],
+  "row_nonzero_count": {
+    "0": 1,
+    "4": 1
+  },
+  "row_participation_ratio": {
+    "0": 1.0,
+    "4": 1.0
+  },
+  "row_partition_sizes_all": {
+    "0": 1,
+    "1": 2,
+    "2": 3,
+    "3": 2,
+    "4": 1
+  },
+  "row_phase_alignment": {
+    "0": 1.0,
+    "4": 1.0
+  },
+  "row_probabilities": {
+    "0": 0.5000000000000001,
+    "4": 0.5000000000000001
+  },
+  "row_sizes": {
+    "0": 1,
+    "4": 1
+  }
+}
