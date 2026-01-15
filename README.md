@@ -21,7 +21,7 @@ compact and interpretable visual representation:
 - **Rows** → logical or excitation subspaces
 - **Columns** → ordered basis states within each subspace
 
-QSD supports **qubits and qudits** by specifying subsystem dimensions through `dims`.
+QSD infers equal local dimensions directly from the statevector length (assumes N = n^m).
 
 ---
 
@@ -52,7 +52,7 @@ from qsd import plot_qsd
 import numpy as np
 psi = np.array([1/np.sqrt(2), 0, 0, 1/np.sqrt(2)], dtype=complex)
 
-plot_qsd(psi, dims=[2, 2])
+plot_qsd(psi)
 ```
 
 For combined analysis and visualization:
@@ -60,7 +60,7 @@ For combined analysis and visualization:
 ```python
 from qsd import analyze_and_plot_qsd
 
-metrics = analyze_and_plot_qsd(psi, dims=[2,2], show_metrics=True)
+metrics = analyze_and_plot_qsd(psi, show_metrics=True)
 ```
 
 ---
@@ -69,15 +69,15 @@ metrics = analyze_and_plot_qsd(psi, dims=[2,2], show_metrics=True)
 
 ```python
 from qiskit import QuantumCircuit
-from qsd.from_qiskit import state_from_circuit
+from qiskit.quantum_info import Statevector
 from qsd import plot_qsd
 
 qc = QuantumCircuit(2)
 qc.h(0)
 qc.cx(0,1)
 
-psi = state_from_circuit(qc)
-plot_qsd(psi, dims=[2,2], show_metrics=True)
+psi = Statevector.from_circuit(qc).data
+plot_qsd(psi, show_metrics=True)
 ```
 
 Install Qiskit if needed:

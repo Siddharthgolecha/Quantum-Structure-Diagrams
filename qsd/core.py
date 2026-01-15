@@ -1,6 +1,10 @@
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any, Callable, Dict, List, Tuple, Union
+
+PhaseGauge = Union[bool, None, str, Tuple[str, Any]]
 
 import numpy as np
+
+from .dimensions import resolve_dims
 
 # -----------------------------
 # Utilities
@@ -126,23 +130,6 @@ def _make_order_key(
 # Phase gauge + rendering conventions
 # -----------------------------
 
-
-def apply_phase_gauge(psi: np.ndarray, eps: float = 1e-15) -> np.ndarray:
-    """
-    Fix global phase so that the largest-magnitude amplitude is real and >= 0:
-        psi -> psi * exp(-i arg(c_{i*})), i* = argmax |c_i|
-    """
-    psi = np.asarray(psi, dtype=complex).reshape(-1)
-    if psi.size == 0:
-        return psi
-    mags = np.abs(psi)
-    i_star = int(np.argmax(mags))
-    if mags[i_star] <= eps:
-        return psi
-    phase = np.angle(psi[i_star])
-    return psi * np.exp(-1j * phase)
-
-
 def threshold_for_rendering(psi: np.ndarray, render_eps: float) -> np.ndarray:
     """
     For visualization only: set small amplitudes to 0 (and thus ignore phase).
@@ -153,6 +140,46 @@ def threshold_for_rendering(psi: np.ndarray, render_eps: float) -> np.ndarray:
     out[np.abs(out) < render_eps] = 0.0 + 0.0j
     return out
 
+def apply_phase_gauge(
+    psi: np.ndarray,
+    gauge: PhaseGauge = "max",
+    *,
+    eps: float = 1e-15,
+) -> np.ndarray:
+    """
+    Apply a global phase rotation psi -> psi * exp(-i theta).
+
+    gauge:
+      - False / None: no change
+      - True: treated as "max" (backward compatible)
+      - "max": choose theta = arg(psi[argmax |psi|])  (current behavior)
+      - ("index", k): choose theta = arg(psi[k]) if |psi[k]|>eps else 0
+    """
+    psi = np.asarray(psi, dtype=complex).reshape(-1)
+    if psi.size == 0 or gauge is None or gauge is False:
+        return psi
+
+    if gauge is True:
+        gauge = "max"
+
+    theta = 0.0
+
+    if gauge == "max":
+        mags = np.abs(psi)
+        i_star = int(np.argmax(mags))
+        if mags[i_star] > eps:
+            theta = np.angle(psi[i_star])
+
+    elif isinstance(gauge, tuple) and len(gauge) == 2 and gauge[0] == "index":
+        k = int(gauge[1])
+        if 0 <= k < psi.size and np.abs(psi[k]) > eps:
+            theta = np.angle(psi[k])
+
+    else:
+        raise ValueError(f"Unsupported phase gauge: {gauge!r}")
+
+    return psi * np.exp(-1j * theta)
+
 
 # -----------------------------
 # Main construction: build QSD rows
@@ -161,12 +188,11 @@ def threshold_for_rendering(psi: np.ndarray, render_eps: float) -> np.ndarray:
 
 def build_qsd_lattice(
     psi: Union[np.ndarray, List[complex]],
-    dims: List[int],
     grouping: Grouping = "auto",
     ordering: OrderingPerRow = "lex",
     *,
     normalize_state: bool = False,
-    phase_gauge: bool = False,
+    phase_gauge: PhaseGauge = False,
     return_indices: bool = False,
 ) -> Tuple:
     """
@@ -174,10 +200,9 @@ def build_qsd_lattice(
 
     Parameters
     ----------
-    psi : array-like complex, shape (N,)
+    psi : array-like of complex, shape (N,)
         Statevector coefficients c_i in the computational basis.
-    dims : list[int]
-        Local dimensions [d1, ..., dn], so N = prod(dims).
+        Local dimensions are inferred from N (assumes equal dims: N = n^m).
     grouping : str or callable
         Grouping function G. See _make_grouping_fn() for supported strings.
     ordering : str/callable OR dict[row_label -> str/callable]
@@ -185,9 +210,22 @@ def build_qsd_lattice(
         - If a single str/callable is given, it is used for all rows.
         - If a dict is given, it can specify different π_r per row label.
     normalize_state : bool
-        If True, normalize psi to unit norm. (Your LaTeX assumes normalized input.)
-    phase_gauge : bool
-        If True, apply global phase gauge convention for rendering comparability.
+        If True, normalize psi to unit norm. (The paper assumes normalized input.)
+    phase_gauge : PhaseGauge
+        Global phase convention applied as a preprocessing step:
+            psi -> psi * exp(-i * theta)
+
+        This does not change magnitudes |c_i| or any physical predictions; it only
+        fixes a representative of the global U(1) phase for visual comparability.
+
+        Supported values (backward compatible):
+        - False / None: do not apply a phase gauge (raw phases).
+        - True: same as "max" (canonical per-figure gauge).
+        - "max": choose theta = arg(c_{i*}) where i* = argmax_i |c_i|, so the
+            largest-magnitude amplitude becomes real and >= 0.
+        - ("index", k): choose theta = arg(c_k) (if |c_k| > eps), so basis index k
+            is phase-anchored to 0 across plots. Useful for time-series comparisons.
+
     return_indices : bool
         If True, also return per-row flat indices and the row-major permutation.
 
@@ -199,10 +237,11 @@ def build_qsd_lattice(
         Ragged rows of amplitudes a^(r) in the order induced by π_r.
     index_rows, flat_indices, psi_perm : optional
         Only if return_indices=True:
-          - index_rows: list[list[int]] parallel to rows
-          - flat_indices: row-major flattening of index_rows
-          - psi_perm: psi permuted into row-major QSD order
+        - index_rows: list[list[int]] parallel to rows
+        - flat_indices: row-major flattening of index_rows
+        - psi_perm: psi permuted into row-major QSD order
     """
+    dims = resolve_dims(psi)
     psi = np.asarray(psi, dtype=complex).reshape(-1)
 
     N = int(np.prod(dims))

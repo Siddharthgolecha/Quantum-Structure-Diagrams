@@ -2,6 +2,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 
+from .dimensions import resolve_dims
 
 def decode_basis_index(flat: int, dims: List[int]) -> Tuple[int, ...]:
     """Decode a flat basis index into mixed-radix levels given subsystem dims."""
@@ -59,7 +60,6 @@ def _harmonic_numbers_up_to(m: int) -> np.ndarray:
 
 def bipartite_linear_entropy(
     psi: np.ndarray,
-    dims: List[int],
     A_subsystems: List[int],
 ) -> Dict[str, float]:
     """
@@ -69,6 +69,7 @@ def bipartite_linear_entropy(
 
     Returns: {"value": E, "d_A": d_A, "purity": Tr(rho_A^2)}
     """
+    dims = resolve_dims(psi)
     n = len(dims)
     A_subsystems = sorted(set(A_subsystems))
     if any(a < 0 or a >= n for a in A_subsystems):
@@ -99,7 +100,6 @@ def bipartite_linear_entropy(
 
 def bipartite_rank_one_test(
     psi: np.ndarray,
-    dims: List[int],
     A_subsystems: List[int],
     tol: float = 1e-10,
 ) -> Dict[str, Any]:
@@ -109,6 +109,7 @@ def bipartite_rank_one_test(
     Returns a robust rank-1 test for the coefficient matrix M (Schmidt rank 1 ↔ separable),
     implemented via singular values.
     """
+    dims = resolve_dims(psi)
     n = len(dims)
     A_subsystems = sorted(set(A_subsystems))
     if any(a < 0 or a >= n for a in A_subsystems):
@@ -140,7 +141,6 @@ def bipartite_rank_one_test(
 
 def compute_qsd_metrics(
     psi: Union[np.ndarray, List[complex]],
-    dims: List[int],
     grouping: Union[str, Callable[[Tuple[int, ...]], Any]] = "auto",
     ordering: Union[str, Callable[[Tuple[int, ...], int], Any]] = "lex",
     A_subsystems: Optional[List[int]] = None,
@@ -148,6 +148,8 @@ def compute_qsd_metrics(
 ) -> Dict[str, Any]:
     """
     Compute QSD-aligned metrics.
+
+    Local dimensions are inferred from the statevector length (assumes equal dims).
 
     Returns (populated rows only, i.e., P_row(r) > eps):
       - row_sizes:              N_r
@@ -166,6 +168,7 @@ def compute_qsd_metrics(
       - haar_baselines: for each row label r in the partition:
             E[P_row(r)], Var(P_row(r)), E[S_amp(r)], E[sum p^2]
     """
+    dims = resolve_dims(psi)
     psi = np.asarray(psi, dtype=complex).reshape(-1)
 
     N = int(np.prod(dims))
@@ -306,8 +309,8 @@ def compute_qsd_metrics(
         n = len(dims)
         A_subsystems = list(range(max(1, n // 2)))
 
-    ent = bipartite_linear_entropy(psi, dims, A_subsystems)
-    sep_test = bipartite_rank_one_test(psi, dims, A_subsystems)
+    ent = bipartite_linear_entropy(psi, A_subsystems)
+    sep_test = bipartite_rank_one_test(psi, A_subsystems)
 
     # Haar baselines for the partition induced by G (Prop. Haar baselines...)
     max_Nr = max(row_sizes_all.values()) if row_sizes_all else 0

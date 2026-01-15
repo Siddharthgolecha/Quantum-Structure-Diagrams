@@ -1,14 +1,17 @@
 import json
+from pathlib import Path
 
 import numpy as np
 
 from qsd import analyze_and_plot_qsd
 
+SAVE_DIR = Path("figures") / "appendix_examples"
+SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
-def run_example(name, psi, dims, *, save_path, caption, grouping=None, ordering=None):
+
+def run_example(name, psi, *, save_path, caption, grouping=None, ordering=None):
     """Run QSD analysis, plot the figure, and persist metrics to disk."""
     plot_kwargs = {
-        "dims": dims,
         "theme": "light",
         "show_metrics": True,
         "save_path": save_path,
@@ -22,7 +25,7 @@ def run_example(name, psi, dims, *, save_path, caption, grouping=None, ordering=
 
     metrics = analyze_and_plot_qsd(psi, **plot_kwargs)
 
-    metrics_path = f"./figures/{name}_metrics.json"
+    metrics_path = SAVE_DIR / f"{name}_metrics.json"
     with open(metrics_path, "w") as handle:
         json.dump(metrics, handle, indent=2, sort_keys=True)
 
@@ -35,8 +38,7 @@ psi_ghz[0] = psi_ghz[7] = 1 / np.sqrt(2)
 run_example(
     "ghz_qsd_light",
     psi_ghz,
-    dims=[2, 2, 2],
-    save_path="./figures/ghz_qsd_light.png",
+    save_path=str(SAVE_DIR / "ghz_qsd_light.png"),
     caption="QSD of GHZ; hue=phase, brightness=|amp|.",
 )
 
@@ -47,8 +49,7 @@ psi_minus[2] = -1 / np.sqrt(2)
 run_example(
     "psi_minus_bell_qsd_light",
     psi_minus,
-    dims=[2, 2],
-    save_path="./figures/psi_minus_bell_qsd_light.png",
+    save_path=str(SAVE_DIR / "psi_minus_bell_qsd_light.png"),
     caption=r"QSD of Bell state $|\Psi-\rangle$; hue=phase, brightness=|amp|.",
 )
 
@@ -58,8 +59,7 @@ psi_w[1] =  psi_w[2] = psi_w[4] = 1 / np.sqrt(3)
 run_example(
     "w_qsd_light",
     psi_w,
-    dims=[2, 2, 2],
-    save_path="./figures/w_qsd_light.png",
+    save_path=str(SAVE_DIR / "w_qsd_light.png"),
     caption="QSD of W state; single-excitation layer visualized.",
 )
 
@@ -69,8 +69,7 @@ psi_qut[0] = psi_qut[8] = 1 / np.sqrt(2)
 run_example(
     "qutrit_bell_qsd_light",
     psi_qut,
-    dims=[3, 3],
-    save_path="./figures/qutrit_bell_qsd_light.png",
+    save_path=str(SAVE_DIR / "qutrit_bell_qsd_light.png"),
     caption="QSD of two-qutrit Bell-like state (row = sum of levels).",
     grouping="levelsum",
 )
@@ -82,7 +81,6 @@ psi_rand /= np.linalg.norm(psi_rand)
 run_example(
     "haar3_qsd_light",
     psi_rand,
-    dims=[2, 2, 2],
-    save_path="./figures/haar3_qsd_light.png",
+    save_path=str(SAVE_DIR / "haar3_qsd_light.png"),
     caption="Haar-random 3-qubit state.",
 )

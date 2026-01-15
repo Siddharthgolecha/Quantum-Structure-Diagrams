@@ -8,6 +8,7 @@ from matplotlib.colors import hsv_to_rgb
 from matplotlib.patches import Rectangle, Wedge
 
 from .core import build_qsd_lattice
+from .dimensions import resolve_dims
 from .metrics import compute_qsd_metrics
 
 # -------------------- Paper style (only used when style="paper") --------------------
@@ -188,7 +189,6 @@ def _add_magnitude_legend_below(fig, ring_ax, theme="dark"):
 
 def plot_qsd(
     psi,
-    dims,
     grouping="hamming",
     ordering="lex",
     show_metrics=True,
@@ -205,27 +205,21 @@ def plot_qsd(
     phase_gauge: bool = True,
     render_eps: float = 1e-12,
 ):
+    dims = resolve_dims(psi)
 
     with _rc_context(style):
         # ---------------- Lattice construction & pruning ------------------------
         EPS = float(render_eps)
 
-        try:
-            ordered, rows, index_rows, _, _ = build_qsd_lattice(
-                psi,
-                dims,
-                grouping,
-                ordering,
-                return_indices=True,
-                normalize_state=True,  # safe: plot is invariant to global scaling (you use gmax)
-                phase_gauge=phase_gauge,  # aligns hue convention across figures
-            )
-            row_labels_full = list(ordered.keys())  # IMPORTANT: true group labels
-        except TypeError:
-            # Legacy core.py: (ordered, rows) only, no phase_gauge support
-            ordered, rows = build_qsd_lattice(psi, dims, grouping, ordering)
-            index_rows = None
-            row_labels_full = list(ordered.keys())
+        ordered, rows, index_rows, _, _ = build_qsd_lattice(
+            psi,
+            grouping,
+            ordering,
+            return_indices=True,
+            normalize_state=True,  # safe: plot is invariant to global scaling (you use gmax)
+            phase_gauge=phase_gauge,  # aligns hue convention across figures
+        )
+        row_labels_full = list(ordered.keys())  # IMPORTANT: true group labels
 
         if trim_empty is None:
             trim_empty = len(dims) > 2
@@ -396,7 +390,7 @@ def plot_qsd(
 
         if show_metrics:
             try:
-                m = compute_qsd_metrics(psi, dims, grouping=grouping, ordering=ordering)
+                m = compute_qsd_metrics(psi, grouping=grouping, ordering=ordering)
                 D = m["row_delocalization"]
                 E = m["bipartite_entanglement_linear"]["value"]
                 rank1 = m.get("aligned_separability_test", {}).get("rank_one", None)
@@ -473,8 +467,8 @@ def plot_qsd(
             plt.show()
 
 
-def analyze_and_plot_qsd(psi, dims, **kwargs):
-    plot_qsd(psi, dims, **kwargs)
+def analyze_and_plot_qsd(psi, **kwargs):
+    plot_qsd(psi, **kwargs)
     grouping = kwargs.get("grouping", "hamming")
     ordering = kwargs.get("ordering", "lex")
-    return compute_qsd_metrics(psi, dims, grouping=grouping, ordering=ordering)
+    return compute_qsd_metrics(psi, grouping=grouping, ordering=ordering)
