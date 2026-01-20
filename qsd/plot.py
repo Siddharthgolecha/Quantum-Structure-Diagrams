@@ -38,6 +38,16 @@ _HUE_OFFSET = 2.0 / 3.0  # 0.666..., HSV hue for blue
 
 
 def _rc_context(style: str):
+    """Return a matplotlib rc_context for the requested style.
+
+    Args:
+        style: "paper" enables PAPER_RC; anything else is a no-op context.
+
+    Example:
+        >>> ctx = _rc_context("paper")
+        >>> hasattr(ctx, "__enter__")
+        True
+    """
     return (
         mpl.rc_context(PAPER_RC) if (style or "").lower() == "paper" else nullcontext()
     )
@@ -47,7 +57,12 @@ def _rc_context(style: str):
 
 
 def _normalize_text(s):
-    """Replace non-breaking hyphen and long dashes with a regular hyphen for font safety."""
+    """Replace non-breaking hyphen and long dashes with a safe ASCII hyphen.
+
+    Example:
+        >>> _normalize_text("A\u2011B\u2013C\u2014D")
+        'A-B-C-D'
+    """
     if not s:
         return s
     return (
@@ -59,9 +74,19 @@ def _normalize_text(s):
 
 # ---------------- Optional Column Trimming (Preserve original indices) ----------------
 def _trim_empty_columns(rows, eps=1e-12):
-    """
-    Remove columns with no nonzero amplitudes, preserving original column indices.
-    Returns: (new_rows, kept_indices, keep_mask)
+    """Remove empty columns while preserving original column indices.
+
+    Args:
+        rows: Ragged rows of complex amplitudes.
+        eps: Threshold below which entries are treated as zero.
+
+    Returns:
+        (new_rows, kept_indices, keep_mask)
+
+    Example:
+        >>> rows = [[0+0j, 1+0j], [0+0j, 0+0j]]
+        >>> _trim_empty_columns(rows)[1]
+        [1]
     """
     if not rows:
         return rows, [], []
@@ -86,6 +111,19 @@ def _trim_empty_columns(rows, eps=1e-12):
 
 
 def _idx_to_ket(index: int, dims):
+    """Convert a flat index to a ket string using mixed-radix digits.
+
+    Args:
+        index: Flat basis index.
+        dims: Per-axis dimensions.
+
+    Returns:
+        A ket string like "|0,1,0>".
+
+    Example:
+        >>> _idx_to_ket(3, [2, 2])
+        '|1,1>'
+    """
     total = np.prod(dims)
     if index >= total:
         return "|?⟩"  # fallback
@@ -113,6 +151,27 @@ def _add_phase_legend_outside(
     label_fs=9,
     center_fs=12,
 ):
+    """Add a phase wheel legend outside the main axes.
+
+    Args:
+        fig: Matplotlib figure.
+        ax: Main axes used for placement reference.
+        theme: "dark" or "light" theme to set text colors.
+        wheel_diameter_in: Diameter of the wheel in inches.
+        right_margin_in: Right margin in inches.
+        center_text: Center label text.
+        label_fs: Font size for the labels.
+        center_fs: Font size for the center label.
+
+    Returns:
+        The legend axes instance.
+
+    Example:
+        >>> fig, ax = plt.subplots()
+        >>> leg = _add_phase_legend_outside(fig, ax, theme="light")
+        >>> hasattr(leg, "set_axis_off")
+        True
+    """
     txt = "white" if theme == "dark" else "black"
 
     fig_w, _ = fig.get_size_inches()
@@ -162,6 +221,21 @@ def _add_phase_legend_outside(
 
 
 def _add_magnitude_legend_below(fig, ring_ax, theme="dark"):
+    """Add a magnitude legend below a phase wheel axes.
+
+    Args:
+        fig: Matplotlib figure.
+        ring_ax: Axes returned by _add_phase_legend_outside.
+        theme: "dark" or "light" theme to set text colors.
+
+    Returns:
+        None. Adds an axes to the figure.
+
+    Example:
+        >>> fig, ax = plt.subplots()
+        >>> ring = _add_phase_legend_outside(fig, ax, theme="light")
+        >>> _add_magnitude_legend_below(fig, ring, theme="light")
+    """
     txt = "white" if theme == "dark" else "black"
     rb = ring_ax.get_position()
 
@@ -204,7 +278,41 @@ def plot_qsd(
     annotate_threshold: float = 0.04,
     phase_gauge: bool = True,
     render_eps: float = 1e-12,
+    show: bool = True,
+    return_fig: bool = False,
 ):
+    """Render a QSD plot for a statevector.
+
+    Args:
+        psi: Statevector as a flat complex array.
+        grouping: Row grouping strategy.
+        ordering: Within-row ordering strategy.
+        show_metrics: If True, render the metrics band at the top.
+        theme: "dark" or "light" plot theme.
+        save_path: Optional path to save the figure as an image.
+        caption: Optional caption in the bottom band.
+        show_legend: Whether to draw the phase/magnitude legend.
+        legend_kind: "phase", "both", or "none".
+        min_height_in: Minimum figure height in inches.
+        style: "paper" for paper-friendly rcParams.
+        trim_empty: If True, remove empty columns.
+        annotate_basis: If True, annotate basis kets inside cells.
+        annotate_threshold: Minimum magnitude to annotate.
+        phase_gauge: Phase gauge strategy for consistent hue.
+        render_eps: Render threshold for small amplitudes.
+        show: If True, call plt.show() when not saving.
+        return_fig: If True, return the figure instead of showing it.
+
+    Returns:
+        Matplotlib figure if return_fig=True, otherwise None.
+
+    Example:
+        >>> import numpy as np
+        >>> psi = np.array([1, 0, 0, 0], dtype=complex)
+        >>> fig = plot_qsd(psi, grouping="hamming", ordering="lex", return_fig=True, show=False)
+        >>> fig is not None
+        True
+    """
     dims = resolve_dims(psi)
 
     with _rc_context(style):
@@ -462,13 +570,41 @@ def plot_qsd(
         # ---------------- Save or Show -----------------------------------------
         if save_path:
             fig.savefig(save_path, dpi=300, bbox_inches="tight", facecolor=bg_color)
+
+        if return_fig:
+            return fig
+
+        if save_path:
             plt.close(fig)
-        else:
+        elif show:
             plt.show()
 
 
 def analyze_and_plot_qsd(psi, **kwargs):
-    plot_qsd(psi, **kwargs)
+    """Plot a QSD and return metrics (and optionally the figure).
+
+    This is a convenience wrapper around plot_qsd and compute_qsd_metrics.
+
+    Args:
+        psi: Statevector as a flat complex array.
+        **kwargs: Passed through to plot_qsd. If return_fig=True, the figure
+            is returned alongside metrics.
+
+    Returns:
+        If return_fig=False: metrics dict.
+        If return_fig=True: (fig, metrics).
+
+    Example:
+        >>> import numpy as np
+        >>> psi = np.array([1, 0, 0, 0], dtype=complex)
+        >>> fig, m = analyze_and_plot_qsd(psi, return_fig=True, show=False)
+        >>> 'row_delocalization' in m
+        True
+    """
+    fig = plot_qsd(psi, **kwargs)
     grouping = kwargs.get("grouping", "hamming")
     ordering = kwargs.get("ordering", "lex")
-    return compute_qsd_metrics(psi, grouping=grouping, ordering=ordering)
+    metrics = compute_qsd_metrics(psi, grouping=grouping, ordering=ordering)
+    if kwargs.get("return_fig", False):
+        return fig, metrics
+    return metrics

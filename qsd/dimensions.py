@@ -4,6 +4,15 @@ import numpy as np
 
 
 def _infer_dims_from_length(n_states: int) -> List[int]:
+    """Infer subsystem dimensions from a statevector length.
+
+    Heuristic: prefer the factorization with the largest number of equal-sized
+    subsystems; otherwise return [n_states] for a single subsystem.
+
+    Example:
+        >>> _infer_dims_from_length(8)
+        [2, 2, 2]
+    """
     if n_states <= 0:
         raise ValueError("Statevector length must be positive.")
 
@@ -30,5 +39,17 @@ def _infer_dims_from_length(n_states: int) -> List[int]:
 def resolve_dims(
     psi: Iterable[complex],
 ) -> List[int]:
+    """Resolve dimensions for a statevector-like iterable.
+
+    Args:
+        psi: Iterable of complex amplitudes.
+
+    Returns:
+        List of inferred dimensions.
+
+    Example:
+        >>> resolve_dims([1, 0, 0, 0])
+        [2, 2]
+    """
     psi_arr = np.asarray(psi, dtype=complex).reshape(-1)
     return _infer_dims_from_length(int(psi_arr.size))

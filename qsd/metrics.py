@@ -5,7 +5,19 @@ import numpy as np
 from .dimensions import resolve_dims
 
 def decode_basis_index(flat: int, dims: List[int]) -> Tuple[int, ...]:
-    """Decode a flat basis index into mixed-radix levels given subsystem dims."""
+    """Decode a flat basis index into mixed-radix levels for given dimensions.
+
+    Args:
+        flat: Flat index in [0, prod(dims)).
+        dims: Per-axis dimensions, e.g. [2, 2, 2] for 3 qubits.
+
+    Returns:
+        Tuple of digits, one per dimension.
+
+    Example:
+        >>> decode_basis_index(5, [2, 2, 2])
+        (1, 0, 1)
+    """
     levels = []
     for d in reversed(dims):
         levels.append(flat % d)
@@ -14,7 +26,12 @@ def decode_basis_index(flat: int, dims: List[int]) -> Tuple[int, ...]:
 
 
 def _row_label_sort_key(label: Any) -> Tuple[int, Any]:
-    """Robust ordering for row labels (ints first, then floats, then strings)."""
+    """Return a sort key that orders numeric labels before string labels.
+
+    Example:
+        >>> sorted([\"b\", 2, \"a\", 1], key=_row_label_sort_key)
+        [1, 2, 'a', 'b']
+    """
     if isinstance(label, (int, np.integer)):
         return (0, int(label))
     if isinstance(label, (float, np.floating)):
@@ -25,8 +42,21 @@ def _row_label_sort_key(label: Any) -> Tuple[int, Any]:
 def _resolve_grouping(
     dims: List[int], grouping: Union[str, Callable]
 ) -> Tuple[str, Callable]:
-    """
-    Resolve grouping into (grouping_resolved_name, G(levels)->row_label).
+    """Resolve grouping into (name, G(levels)->row_label) callable.
+
+    Args:
+        dims: Per-axis dimensions.
+        grouping: String alias or callable mapping levels -> row label.
+
+    Returns:
+        Tuple of resolved name and callable.
+
+    Example:
+        >>> name, fn = _resolve_grouping([2, 2], \"parity\")
+        >>> name
+        'parity'
+        >>> fn((1, 0))
+        1
     """
     if callable(grouping):
         return ("callable", grouping)
@@ -52,7 +82,12 @@ def _resolve_grouping(
 
 
 def _harmonic_numbers_up_to(m: int) -> np.ndarray:
-    """H_k for k=1..m as float array of length m."""
+    """Compute harmonic numbers H_k for k=1..m.
+
+    Example:
+        >>> _harmonic_numbers_up_to(3).round(3).tolist()
+        [1.0, 1.5, 1.833]
+    """
     if m <= 0:
         return np.array([], dtype=float)
     return np.cumsum(1.0 / np.arange(1, m + 1, dtype=float))
@@ -62,12 +97,22 @@ def bipartite_linear_entropy(
     psi: np.ndarray,
     A_subsystems: List[int],
 ) -> Dict[str, float]:
-    """
-    Pure-state bipartite entanglement via normalized linear entropy:
+    """Compute normalized linear entropy for bipartition A:B.
 
-        E_lin(A:B) = (d_A/(d_A-1)) * (1 - Tr(rho_A^2))
+    E_lin(A:B) = (d_A/(d_A-1)) * (1 - Tr(rho_A^2))
 
-    Returns: {"value": E, "d_A": d_A, "purity": Tr(rho_A^2)}
+    Args:
+        psi: Statevector as a flat complex array.
+        A_subsystems: Indices of subsystems in A (B is the complement).
+
+    Returns:
+        Dict with keys: value, d_A, purity.
+
+    Example:
+        >>> import numpy as np
+        >>> psi = np.array([1, 0, 0, 0], dtype=complex)
+        >>> bipartite_linear_entropy(psi, [0])['value']
+        0.0
     """
     dims = resolve_dims(psi)
     n = len(dims)
@@ -103,11 +148,21 @@ def bipartite_rank_one_test(
     A_subsystems: List[int],
     tol: float = 1e-10,
 ) -> Dict[str, Any]:
-    """
-    Numerical companion to Prop. 'Row colinearity and separability' in the bipartition-aligned case.
+    """Test for rank-1 Schmidt matrix (separable) via singular values.
 
-    Returns a robust rank-1 test for the coefficient matrix M (Schmidt rank 1 ↔ separable),
-    implemented via singular values.
+    Args:
+        psi: Statevector as a flat complex array.
+        A_subsystems: Indices of subsystems in A (B is the complement).
+        tol: Numerical tolerance for rank-one check.
+
+    Returns:
+        Dict with rank_one, sigma_ratio, d_A, d_B.
+
+    Example:
+        >>> import numpy as np
+        >>> psi = np.array([1, 0, 0, 0], dtype=complex)
+        >>> bipartite_rank_one_test(psi, [0])['rank_one']
+        True
     """
     dims = resolve_dims(psi)
     n = len(dims)
@@ -146,27 +201,42 @@ def compute_qsd_metrics(
     A_subsystems: Optional[List[int]] = None,
     eps: float = 1e-15,
 ) -> Dict[str, Any]:
-    """
-    Compute QSD-aligned metrics.
+    """Compute QSD-aligned metrics for a statevector.
 
     Local dimensions are inferred from the statevector length (assumes equal dims).
 
-    Returns (populated rows only, i.e., P_row(r) > eps):
-      - row_sizes:              N_r
-      - row_probabilities:      P_row(r)
-      - row_amplitude_entropy:  S_amp(r)  (base-2, conditional within-row)
-      - row_effective_support:  N_eff(r) = 2^{S_amp(r)}
-      - row_collision_entropy:  H2(r) = -log2(sum p^2)
-      - row_participation_ratio:PR(r) = 1/sum p^2
-      - row_nonzero_count:      k_r  (# entries with |c|^2 > eps inside the row)
-      - row_phase_alignment:    C_row(r) = |sum c| / sum |c|
-      - row_delocalization:     D_row = 1 - sum_r P_row(r)^2
-      - bipartite_entanglement_linear: E_lin(A:B)  (reference metric)
-      - aligned_separability_test: rank-one test via SVD (numerical companion)
+    Args:
+        psi: Statevector as a flat complex array.
+        grouping: Row grouping strategy or callable.
+        ordering: Row ordering strategy or callable (metrics do not depend on it).
+        A_subsystems: Optional subsystem indices for entanglement diagnostics.
+        eps: Threshold for considering entries as nonzero.
 
-    Also returns Haar baselines (Prop. Haar baselines...) for the *partition* induced by G:
-      - haar_baselines: for each row label r in the partition:
-            E[P_row(r)], Var(P_row(r)), E[S_amp(r)], E[sum p^2]
+    Returns:
+        Dict of metrics. For populated rows only (P_row(r) > eps):
+        - row_sizes:              N_r
+        - row_probabilities:      P_row(r)
+        - row_amplitude_entropy:  S_amp(r)  (base-2, conditional within-row)
+        - row_effective_support:  N_eff(r) = 2^{S_amp(r)}
+        - row_collision_entropy:  H2(r) = -log2(sum p^2)
+        - row_participation_ratio:PR(r) = 1/sum p^2
+        - row_nonzero_count:      k_r  (# entries with |c|^2 > eps inside the row)
+        - row_phase_alignment:    C_row(r) = |sum c| / sum |c|
+        - row_delocalization:     D_row = 1 - sum_r P_row(r)^2
+        - bipartite_entanglement_linear: E_lin(A:B)  (reference metric)
+        - aligned_separability_test: rank-one test via SVD (numerical companion)
+
+        Also returns Haar baselines (Prop. Haar baselines...) for the partition
+        induced by G:
+        - haar_baselines: for each row label r in the partition:
+              E[P_row(r)], Var(P_row(r)), E[S_amp(r)], E[sum p^2]
+
+    Example:
+        >>> import numpy as np
+        >>> psi = np.array([1, 0, 0, 0], dtype=complex)
+        >>> m = compute_qsd_metrics(psi, grouping=\"hamming\", ordering=\"lex\")
+        >>> round(m['row_delocalization'], 6)
+        0.0
     """
     dims = resolve_dims(psi)
     psi = np.asarray(psi, dtype=complex).reshape(-1)

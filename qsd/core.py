@@ -12,9 +12,18 @@ from .dimensions import resolve_dims
 
 
 def ragged_to_padded(rows: List[List[complex]], pad_value=np.nan) -> np.ndarray:
-    """
-    Convert ragged complex rows to a padded 2D complex array.
-    pad_value defaults to NaN (stored as nan+0j) which many plotting libs treat as empty.
+    """Convert ragged rows into a padded 2D complex array.
+
+    Args:
+        rows: Ragged list of complex rows.
+        pad_value: Value used to pad short rows (nan+0j by default).
+
+    Returns:
+        2D complex array with uniform row length.
+
+    Example:
+        >>> ragged_to_padded([[1+0j, 2+0j], [3+0j]]).shape
+        (2, 2)
     """
     max_len = max((len(r) for r in rows), default=0)
     mat = np.full((len(rows), max_len), pad_value, dtype=complex)
@@ -24,7 +33,12 @@ def ragged_to_padded(rows: List[List[complex]], pad_value=np.nan) -> np.ndarray:
 
 
 def _row_label_sort_key(label: Any) -> Tuple[int, Any]:
-    """Stable sort for heterogeneous row labels."""
+    """Return a sort key that stabilizes heterogeneous row labels.
+
+    Example:
+        >>> sorted([\"b\", 2, \"a\", 1], key=_row_label_sort_key)
+        [1, 2, 'a', 'b']
+    """
     if isinstance(label, (int, np.integer)):
         return (0, int(label))
     if isinstance(label, (float, np.floating)):
@@ -44,20 +58,25 @@ OrderingPerRow = Union[Ordering, Dict[Any, Ordering]]
 def _make_grouping_fn(
     dims: List[int], grouping: Grouping
 ) -> Tuple[str, Callable[[Tuple[int, ...]], Any]]:
-    """
-    Returns (grouping_resolved_name, G(levels)->row_label).
+    """Create a grouping function G and its resolved name.
 
-    Supported grouping strings (aligned with your LaTeX):
-      - "auto":  defaults to "excitation" (nonzero count)
-      - "excitation": sum_k 1[level_k != 0]   (matches Eq. for G_exc)
-      - "hamming": alias for "excitation"
-      - "parity": (sum_k level_k) mod 2
-      - "flat" / "none": single row label 0
-      - callable: user-provided G(levels)->label
+    Supported grouping strings:
+        - "auto": defaults to "excitation" (nonzero count)
+        - "excitation" / "hamming": sum_k 1[level_k != 0]
+        - "parity": sum(levels) mod 2
+        - "flat" / "none": single row label 0
+        - "levelsum": sum(levels) for qudits
+        - callable: user-provided G(levels) -> label
 
-    NOTE:
-      If you ALSO want sum(levels) grouping (old behavior in some code),
-      use "levelsum" explicitly (included below) to avoid naming collision.
+    Returns:
+        Tuple of (resolved_name, grouping_fn).
+
+    Example:
+        >>> name, G = _make_grouping_fn([2, 2], \"parity\")
+        >>> name
+        'parity'
+        >>> G((1, 0))
+        1
     """
     if callable(grouping):
         return ("callable", grouping)
@@ -88,15 +107,24 @@ def _make_grouping_fn(
 def _make_order_key(
     dims: List[int], ordering: Ordering
 ) -> Tuple[str, Callable[[Tuple[int, ...], int], Any], bool]:
-    """
-    Returns (ordering_resolved_name, key(levels, flat)->key, reverse_flag).
+    """Create an ordering key function for within-row sorting.
 
     Supported ordering strings:
-      - "lex": lexicographic by levels tuple
-      - "flat": by flat index
-      - "reverse": reverse lex
-      - "gray": Gray-code key (qubits only; falls back to lex for non-qubits)
-      - callable: user-provided key(levels, flat)->sortable key
+        - "lex": lexicographic by levels tuple
+        - "flat": by flat index
+        - "reverse": reverse lex
+        - "gray": Gray-code key (qubits only; falls back to lex)
+        - callable: user-provided key(levels, flat) -> sortable key
+
+    Returns:
+        Tuple of (resolved_name, key_fn, reverse_flag).
+
+    Example:
+        >>> name, key_fn, rev = _make_order_key([2, 2], \"lex\")
+        >>> name, rev
+        ('lex', False)
+        >>> key_fn((1, 0), 2)
+        (1, 0)
     """
     if callable(ordering):
         return ("callable", ordering, False)
@@ -131,9 +159,19 @@ def _make_order_key(
 # -----------------------------
 
 def threshold_for_rendering(psi: np.ndarray, render_eps: float) -> np.ndarray:
-    """
-    For visualization only: set small amplitudes to 0 (and thus ignore phase).
-    Metrics should be computed on the un-thresholded psi unless explicitly stated otherwise.
+    """Zero-out small amplitudes for visualization-only rendering.
+
+    Args:
+        psi: Statevector as a flat complex array.
+        render_eps: Threshold below which amplitudes are zeroed.
+
+    Returns:
+        Thresholded statevector.
+
+    Example:
+        >>> import numpy as np
+        >>> threshold_for_rendering(np.array([1e-6+0j, 1+0j]), 1e-3)
+        array([0.+0.j, 1.+0.j])
     """
     psi = np.asarray(psi, dtype=complex).reshape(-1)
     out = psi.copy()
@@ -146,14 +184,20 @@ def apply_phase_gauge(
     *,
     eps: float = 1e-15,
 ) -> np.ndarray:
-    """
-    Apply a global phase rotation psi -> psi * exp(-i theta).
+    """Apply a global phase rotation psi -> psi * exp(-i theta).
 
-    gauge:
-      - False / None: no change
-      - True: treated as "max" (backward compatible)
-      - "max": choose theta = arg(psi[argmax |psi|])  (current behavior)
-      - ("index", k): choose theta = arg(psi[k]) if |psi[k]|>eps else 0
+    Args:
+        psi: Statevector as a flat complex array.
+        gauge: Phase gauge strategy ("max", ("index", k), True/False).
+        eps: Amplitude threshold for "max" or index gauge.
+
+    Returns:
+        Phase-rotated statevector.
+
+    Example:
+        >>> import numpy as np
+        >>> apply_phase_gauge(np.array([1j, 0]), gauge=\"max\")
+        array([1.+0.j, 0.+0.j])
     """
     psi = np.asarray(psi, dtype=complex).reshape(-1)
     if psi.size == 0 or gauge is None or gauge is False:
@@ -195,51 +239,26 @@ def build_qsd_lattice(
     phase_gauge: PhaseGauge = False,
     return_indices: bool = False,
 ) -> Tuple:
-    """
-    Construct QSD row vectors a^(r) from a fixed-basis statevector under (G, {π_r}).
+    """Construct QSD row vectors a^(r) from a statevector under (G, {pi_r}).
 
-    Parameters
-    ----------
-    psi : array-like of complex, shape (N,)
-        Statevector coefficients c_i in the computational basis.
-        Local dimensions are inferred from N (assumes equal dims: N = n^m).
-    grouping : str or callable
-        Grouping function G. See _make_grouping_fn() for supported strings.
-    ordering : str/callable OR dict[row_label -> str/callable]
-        Within-row ordering π_r.
-        - If a single str/callable is given, it is used for all rows.
-        - If a dict is given, it can specify different π_r per row label.
-    normalize_state : bool
-        If True, normalize psi to unit norm. (The paper assumes normalized input.)
-    phase_gauge : PhaseGauge
-        Global phase convention applied as a preprocessing step:
-            psi -> psi * exp(-i * theta)
+    Args:
+        psi: Statevector coefficients c_i in the computational basis.
+        grouping: Grouping function G. See _make_grouping_fn() for supported strings.
+        ordering: Within-row ordering pi_r (string, callable, or per-row dict).
+        normalize_state: If True, normalize psi to unit norm.
+        phase_gauge: Optional global phase convention applied before grouping.
+        return_indices: If True, return index rows and permutations.
 
-        This does not change magnitudes |c_i| or any physical predictions; it only
-        fixes a representative of the global U(1) phase for visual comparability.
+    Returns:
+        ordered: dict[row_label -> list[(flat_index, levels_tuple)]]
+        rows: ragged rows of amplitudes a^(r) in the order induced by pi_r
+        index_rows, flat_indices, psi_perm: optional extras when return_indices=True
 
-        Supported values (backward compatible):
-        - False / None: do not apply a phase gauge (raw phases).
-        - True: same as "max" (canonical per-figure gauge).
-        - "max": choose theta = arg(c_{i*}) where i* = argmax_i |c_i|, so the
-            largest-magnitude amplitude becomes real and >= 0.
-        - ("index", k): choose theta = arg(c_k) (if |c_k| > eps), so basis index k
-            is phase-anchored to 0 across plots. Useful for time-series comparisons.
-
-    return_indices : bool
-        If True, also return per-row flat indices and the row-major permutation.
-
-    Returns
-    -------
-    ordered : dict[row_label -> list[(flat_index, levels_tuple)]]
-        The grouped + ordered basis indices with explicit levels tuples.
-    rows : list[list[complex]]
-        Ragged rows of amplitudes a^(r) in the order induced by π_r.
-    index_rows, flat_indices, psi_perm : optional
-        Only if return_indices=True:
-        - index_rows: list[list[int]] parallel to rows
-        - flat_indices: row-major flattening of index_rows
-        - psi_perm: psi permuted into row-major QSD order
+    Example:
+        >>> psi = [1, 0, 0, 0]
+        >>> ordered, rows, *_ = build_qsd_lattice(psi, grouping=\"hamming\", ordering=\"lex\")
+        >>> list(ordered.keys())
+        [0]
     """
     dims = resolve_dims(psi)
     psi = np.asarray(psi, dtype=complex).reshape(-1)

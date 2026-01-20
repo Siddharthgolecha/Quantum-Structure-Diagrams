@@ -1,0 +1,2394 @@
+{
+  "meta": {
+    "grouping": "hamming",
+    "ordering": "lex",
+    "phase_gauge": [
+      "index",
+      0
+    ],
+    "annotate_threshold": 0.0001,
+    "n_steps": 35,
+    "run_tag": "A_n_local_H2_4q"
+  },
+  "energy_trace": [
+    0.561678893106,
+    0.418118183488,
+    0.2563509694646666,
+    0.22108070251333334,
+    0.17654636653533334,
+    0.149531150008,
+    0.221602009942,
+    0.17225868631400004,
+    0.18182671469266665,
+    0.07736913344,
+    0.18958882299933333,
+    0.1455164510906667,
+    0.03904251363733336,
+    -0.005668138496666683,
+    0.04175413004666666,
+    -0.011480829346666645,
+    -0.017740483949999997,
+    -0.058599406718,
+    -0.1315577482473333,
+    -0.03174798635400001,
+    -0.11474129336666666,
+    -0.18482901021933332,
+    -0.10983798596066667,
+    -0.20374640595666663,
+    -0.20404129935333337,
+    -0.2667955673946667,
+    -0.21985469182666662,
+    -0.2793514750646666,
+    -0.3253820725686666,
+    -0.26266526064800005,
+    -0.3593850531493334,
+    -0.23587034891733336,
+    -0.33232406889533334,
+    -0.39009879852866675,
+    -0.39714658438733347
+  ],
+  "rows_union": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "metrics_per_iter": [
+    {
+      "iter": 0,
+      "E": 0.561678893106,
+      "row_delocalization": 0.0,
+      "row_keys": [
+        "4"
+      ],
+      "row_probabilities": {
+        "4": 1.0
+      },
+      "row_amplitude_entropy": {
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.0,
+        "d_A": 4.0,
+        "purity": 1.0
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": true,
+        "sigma_ratio": 0.0,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 1,
+      "E": 0.418118183488,
+      "row_delocalization": 0.35403670913678553,
+      "row_keys": [
+        "2",
+        "4"
+      ],
+      "row_probabilities": {
+        "2": 0.22984884706593015,
+        "4": 0.7701511529340699
+      },
+      "row_amplitude_entropy": {
+        "2": -0.0,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "2": 1.0,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "2": 1.0,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.472048945515714,
+        "d_A": 4.0,
+        "purity": 0.6459632908632145
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5463024898437905,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 2,
+      "E": 0.2563509694646666,
+      "row_delocalization": 0.5200604311489637,
+      "row_keys": [
+        "0",
+        "2",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.052830492497537344,
+        "2": 0.3540367091367856,
+        "4": 0.5931327983656771
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "2": 1.0,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "2": 2.0,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "2": 1.0,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.7769752358095549,
+        "d_A": 4.0,
+        "purity": 0.4172685731428338
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5463024898437905,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 3,
+      "E": 0.22108070251333334,
+      "row_delocalization": 0.6812055416893348,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.04068746470705312,
+        "1": 0.05283049249753735,
+        "2": 0.2726617797226794,
+        "3": 0.17701835456839282,
+        "4": 0.4568019085043374
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 0.7777477169623614,
+        "2": 1.0,
+        "3": 0.7777477169623614,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 1.7144522420307557,
+        "2": 2.0,
+        "3": 1.7144522420307557,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.2934079930260234,
+        "2": 1.0,
+        "3": 0.2934079930260234,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5610650351197158,
+        "d_A": 4.0,
+        "purity": 0.5792012236602131
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5463024898437906,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 4,
+      "E": 0.17654636653533334,
+      "row_delocalization": 0.7252089128783177,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.03133549785410124,
+        "1": 0.08137492941410623,
+        "2": 0.2628212765120143,
+        "3": 0.2726617797226794,
+        "4": 0.351806516497099
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.7777477169623617,
+        "2": 1.8356112706424195,
+        "3": 1.7777477169623617,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.428904484061512,
+        "2": 3.5692260402857405,
+        "3": 3.428904484061512,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.2934079930260234,
+        "2": 0.57090526987836,
+        "3": 0.2934079930260234,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.2613648887646489,
+        "d_A": 4.0,
+        "purity": 0.8039763334265133
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.2404695219821974,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 5,
+      "E": 0.149531150008,
+      "row_delocalization": 0.7252089128783176,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.03133549785410124,
+        "1": 0.08137492941410623,
+        "2": 0.2628212765120143,
+        "3": 0.2726617797226794,
+        "4": 0.3518065164970991
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.7777477169623612,
+        "2": 1.835611270642419,
+        "3": 1.7777477169623617,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.428904484061511,
+        "2": 3.5692260402857396,
+        "3": 3.428904484061512,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.30820488941480484,
+        "2": 0.5040894240382757,
+        "3": 0.4030257346326063,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.2613648887646486,
+        "d_A": 4.0,
+        "purity": 0.8039763334265135
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.24046952198219745,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 6,
+      "E": 0.221602009942,
+      "row_delocalization": 0.7252089128783177,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.03133549785410124,
+        "1": 0.08137492941410623,
+        "2": 0.2628212765120143,
+        "3": 0.27266177972267935,
+        "4": 0.3518065164970989
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.7777477169623612,
+        "2": 1.8356112706424188,
+        "3": 1.7777477169623617,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.428904484061511,
+        "2": 3.5692260402857388,
+        "3": 3.428904484061512,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.544196483215082,
+        "2": 0.6766004253062445,
+        "3": 0.5441964832150822,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.2613648887646492,
+        "d_A": 4.0,
+        "purity": 0.8039763334265131
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.24046952198219754,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 7,
+      "E": 0.17225868631400004,
+      "row_delocalization": 0.7252089128783178,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.03133549785410124,
+        "1": 0.08137492941410623,
+        "2": 0.26282127651201426,
+        "3": 0.27266177972267935,
+        "4": 0.3518065164970989
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.7777477169623612,
+        "2": 1.8356112706424192,
+        "3": 1.7777477169623617,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.428904484061511,
+        "2": 3.56922604028574,
+        "3": 3.428904484061512,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.1675533993504738,
+        "2": 0.5642039299298178,
+        "3": 0.30820488941480484,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.47357459585137074,
+        "d_A": 4.0,
+        "purity": 0.6448190531114719
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.45093758698784153,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 8,
+      "E": 0.18182671469266665,
+      "row_delocalization": 0.7252089128783178,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.03133549785410124,
+        "1": 0.08137492941410623,
+        "2": 0.26282127651201426,
+        "3": 0.27266177972267935,
+        "4": 0.3518065164970989
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.7777477169623612,
+        "2": 1.8356112706424192,
+        "3": 1.7777477169623617,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.428904484061511,
+        "2": 3.56922604028574,
+        "3": 3.428904484061512,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.4030257346326063,
+        "2": 0.5642039299298178,
+        "3": 0.4103523526040322,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.4735745958513709,
+        "d_A": 4.0,
+        "purity": 0.6448190531114718
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.45093758698784187,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 9,
+      "E": 0.07736913344,
+      "row_delocalization": 0.7248046251164241,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.017088854070583272,
+        "1": 0.09684870384936903,
+        "2": 0.343042076580571,
+        "3": 0.2571880052874166,
+        "4": 0.28583236021206004
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.8365085581877407,
+        "2": 2.434542479431715,
+        "3": 1.7634006093956511,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.5714466192211556,
+        "2": 5.405928682989905,
+        "3": 3.394974196704837,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.6991112795584903,
+        "2": 0.46608947239246556,
+        "3": 0.4510238094738037,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.2613648887646492,
+        "d_A": 4.0,
+        "purity": 0.8039763334265131
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.24046952198219743,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 10,
+      "E": 0.18958882299933333,
+      "row_delocalization": 0.717431081292796,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.025030043365922922,
+        "1": 0.061937839222890576,
+        "2": 0.31209772459813556,
+        "3": 0.2920988699138951,
+        "4": 0.3088355228991561
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.6625361901228723,
+        "2": 2.2280141722786064,
+        "3": 1.2362883825363988,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.1657255554833736,
+        "2": 4.684886746516829,
+        "3": 2.355916459899917,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.6477473499994189,
+        "2": 0.06054532884854218,
+        "3": 0.7319472586320275,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.2831933218096997,
+        "d_A": 4.0,
+        "purity": 0.7876050086427252
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.356296402308506,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 11,
+      "E": 0.1455164510906667,
+      "row_delocalization": 0.7418304073562966,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.024471840440361645,
+        "1": 0.14958452832684163,
+        "2": 0.2991551074084656,
+        "3": 0.204452180809944,
+        "4": 0.3223363430143871
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.5188030891036202,
+        "2": 2.290147961827048,
+        "3": 0.7016350385259793,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.8655321626334604,
+        "2": 4.891062709127456,
+        "3": 1.6263469239596993,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.6995461071981559,
+        "2": 0.5568549370750413,
+        "3": 0.6771916594606306,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.6112203998038815,
+        "d_A": 4.0,
+        "purity": 0.5415847001470888
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.6269342065697067,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 12,
+      "E": 0.03904251363733336,
+      "row_delocalization": 0.61826779731246,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.009147664775243617,
+        "1": 0.21745291268082748,
+        "2": 0.11297825492338694,
+        "3": 0.5577194938304616,
+        "4": 0.10270167379008058
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.8938003615860874,
+        "2": 2.2488417436041637,
+        "3": 1.665810639582343,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.7161284280161158,
+        "2": 4.75301101020828,
+        "3": 3.172918885107429,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.7024149207342779,
+        "2": 0.5403920625381822,
+        "3": 0.4545445228136979,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.4806148957302976,
+        "d_A": 4.0,
+        "purity": 0.6395388282022768
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.4444590124971254,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 13,
+      "E": -0.005668138496666683,
+      "row_delocalization": 0.6182677973124598,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.00914766477524362,
+        "1": 0.21745291268082748,
+        "2": 0.11297825492338695,
+        "3": 0.5577194938304617,
+        "4": 0.10270167379008058
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.8938003615860874,
+        "2": 2.2488417436041632,
+        "3": 1.665810639582343,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.7161284280161158,
+        "2": 4.7530110102082785,
+        "3": 3.172918885107429,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.6834790334912413,
+        "2": 0.4058613855774853,
+        "3": 0.5188962925549433,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.4806148957302974,
+        "d_A": 4.0,
+        "purity": 0.6395388282022769
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.4444590124971254,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 14,
+      "E": 0.04175413004666666,
+      "row_delocalization": 0.61826779731246,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.009147664775243616,
+        "1": 0.21745291268082753,
+        "2": 0.11297825492338694,
+        "3": 0.5577194938304616,
+        "4": 0.10270167379008058
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.8938003615860872,
+        "2": 2.2488417436041637,
+        "3": 1.6658106395823433,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.7161284280161153,
+        "2": 4.75301101020828,
+        "3": 3.1729188851074293,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.7461272026585499,
+        "2": 0.35857320341274823,
+        "3": 0.5232574016511883,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.48061489573029714,
+        "d_A": 4.0,
+        "purity": 0.6395388282022771
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.4444590124971255,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 15,
+      "E": -0.011480829346666645,
+      "row_delocalization": 0.6182677973124598,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.009147664775243616,
+        "1": 0.2174529126808275,
+        "2": 0.11297825492338694,
+        "3": 0.5577194938304617,
+        "4": 0.10270167379008058
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.8938003615860874,
+        "2": 2.2488417436041637,
+        "3": 1.665810639582343,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.7161284280161158,
+        "2": 4.75301101020828,
+        "3": 3.172918885107429,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.7363293945734534,
+        "2": 0.5997259339352897,
+        "3": 0.5008802321173526,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5252447114865639,
+        "d_A": 4.0,
+        "purity": 0.606066466385077
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5810724940394051,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 16,
+      "E": -0.017740483949999997,
+      "row_delocalization": 0.6182677973124598,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.009147664775243616,
+        "1": 0.2174529126808275,
+        "2": 0.11297825492338695,
+        "3": 0.5577194938304617,
+        "4": 0.10270167379008055
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.8938003615860874,
+        "2": 2.2488417436041637,
+        "3": 1.665810639582343,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.7161284280161158,
+        "2": 4.75301101020828,
+        "3": 3.172918885107429,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.7363293945734534,
+        "2": 0.5997259339352896,
+        "3": 0.5008802321173526,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5907627426846516,
+        "d_A": 4.0,
+        "purity": 0.5569279429865113
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5984052964029357,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 17,
+      "E": -0.058599406718,
+      "row_delocalization": 0.6993389416320699,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.004716115898773266,
+        "1": 0.1935504722472979,
+        "2": 0.23975569918181197,
+        "3": 0.43556045989142644,
+        "4": 0.1264172527806904
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.775358399359218,
+        "2": 2.0802154432457987,
+        "3": 1.5930129054760829,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.4232304080057268,
+        "2": 4.228703603806283,
+        "3": 3.0167871396031223,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.6666266524418856,
+        "2": 0.5704517069653067,
+        "3": 0.4973885205235622,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.590762742684652,
+        "d_A": 4.0,
+        "purity": 0.5569279429865109
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5984052964029359,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 18,
+      "E": -0.1315577482473333,
+      "row_delocalization": 0.6350777371689933,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.005186865643885572,
+        "1": 0.13236280363256997,
+        "2": 0.4041582436093232,
+        "3": 0.42791191466832174,
+        "4": 0.03038017244589958
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.4401419507108886,
+        "2": 2.2059703616254627,
+        "3": 1.509913742770441,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.7134756280495025,
+        "2": 4.6138476335076195,
+        "3": 2.8479301113371536,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.48000311754474423,
+        "2": 0.7329052691633392,
+        "3": 0.48815148688900073,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.590762742684652,
+        "d_A": 4.0,
+        "purity": 0.5569279429865109
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5984052964029358,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 19,
+      "E": -0.03174798635400001,
+      "row_delocalization": 0.676727160303046,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.006277520660800901,
+        "1": 0.16362912285009631,
+        "2": 0.3217227203162948,
+        "3": 0.43269733723011,
+        "4": 0.07567329894269807
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 0.9284904402891339,
+        "2": 1.8497005726743303,
+        "3": 1.2421759424522913,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 1.90328345878026,
+        "2": 3.604253720018455,
+        "3": 2.3655504712749003,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.1736367877683016,
+        "2": 0.8511528495561657,
+        "3": 0.598450868686145,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5907627426846519,
+        "d_A": 4.0,
+        "purity": 0.556927942986511
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5984052964029358,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 20,
+      "E": -0.11474129336666666,
+      "row_delocalization": 0.6400355303307159,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.0039177537278511825,
+        "1": 0.06997167216041132,
+        "2": 0.4262270332641111,
+        "3": 0.40557246289766613,
+        "4": 0.09431107794996046
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.8027583261367603,
+        "2": 2.1734925706874693,
+        "3": 1.1741702396406597,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.4888663347418736,
+        "2": 4.511141597612204,
+        "3": 2.2566305441499823,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.3731786939796129,
+        "2": 0.6683355924366725,
+        "3": 0.478340627095461,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5907627426846519,
+        "d_A": 4.0,
+        "purity": 0.556927942986511
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5984052964029358,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 21,
+      "E": -0.18482901021933332,
+      "row_delocalization": 0.6350777371689933,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.005186865643885574,
+        "1": 0.13236280363256997,
+        "2": 0.4041582436093232,
+        "3": 0.4279119146683218,
+        "4": 0.03038017244589958
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.4401419507108886,
+        "2": 2.205970361625463,
+        "3": 1.5099137427704408,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.7134756280495025,
+        "2": 4.61384763350762,
+        "3": 2.847930111337153,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.23972705628728685,
+        "2": 0.7012815268225145,
+        "3": 0.4453709136458485,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5907627426846519,
+        "d_A": 4.0,
+        "purity": 0.556927942986511
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.598405296402936,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 22,
+      "E": -0.10983798596066667,
+      "row_delocalization": 0.6350777371689931,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.00518686564388557,
+        "1": 0.13236280363256997,
+        "2": 0.40415824360932323,
+        "3": 0.4279119146683219,
+        "4": 0.03038017244589958
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.4401419507108886,
+        "2": 2.2059703616254627,
+        "3": 1.5099137427704408,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.7134756280495025,
+        "2": 4.6138476335076195,
+        "3": 2.847930111337153,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.5641086851293348,
+        "2": 0.7026497287371688,
+        "3": 0.7795691648261028,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5907627426846519,
+        "d_A": 4.0,
+        "purity": 0.556927942986511
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5984052964029359,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 23,
+      "E": -0.20374640595666663,
+      "row_delocalization": 0.6350777371689931,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.00518686564388557,
+        "1": 0.13236280363257,
+        "2": 0.4041582436093232,
+        "3": 0.4279119146683219,
+        "4": 0.03038017244589958
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.4401419507108888,
+        "2": 2.2059703616254627,
+        "3": 1.5099137427704408,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.713475628049503,
+        "2": 4.6138476335076195,
+        "3": 2.847930111337153,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.2830406508429715,
+        "2": 0.4980769378836714,
+        "3": 0.24765558797614767,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5907627426846519,
+        "d_A": 4.0,
+        "purity": 0.556927942986511
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5984052964029359,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 24,
+      "E": -0.20404129935333337,
+      "row_delocalization": 0.6350777371689931,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.005186865643885574,
+        "1": 0.13236280363257,
+        "2": 0.4041582436093232,
+        "3": 0.4279119146683219,
+        "4": 0.03038017244589958
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.4401419507108884,
+        "2": 2.205970361625463,
+        "3": 1.5099137427704408,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.713475628049502,
+        "2": 4.61384763350762,
+        "3": 2.847930111337153,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.252192750304538,
+        "2": 0.7157015069267275,
+        "3": 0.12435596941660973,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5907627426846518,
+        "d_A": 4.0,
+        "purity": 0.5569279429865112
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5984052964029359,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 25,
+      "E": -0.2667955673946667,
+      "row_delocalization": 0.6743182089391933,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.014336578632081659,
+        "1": 0.23509621401938086,
+        "2": 0.33464825408106913,
+        "3": 0.3973298570059366,
+        "4": 0.018589096261531882
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.4180135693002034,
+        "2": 2.0139034397662603,
+        "3": 1.6262348072827646,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.6721732898471453,
+        "2": 4.038734866983102,
+        "3": 3.0870627472357697,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.4538217696158963,
+        "2": 0.7840337389366682,
+        "3": 0.34677368268312503,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.6536559484191514,
+        "d_A": 4.0,
+        "purity": 0.5097580386856364
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.6891897769816431,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 26,
+      "E": -0.21985469182666662,
+      "row_delocalization": 0.6422377698002033,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.003908337178994754,
+        "1": 0.17763107132674083,
+        "2": 0.3292640386116962,
+        "3": 0.4660962637917656,
+        "4": 0.023100289090802868
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.340671970611326,
+        "2": 2.1374693031772325,
+        "3": 1.3841346861019543,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.532692576961022,
+        "2": 4.399895633706446,
+        "3": 2.610153560871467,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.4202855189507329,
+        "2": 0.7895325010348441,
+        "3": 0.5037990291629827,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.4153613732808957,
+        "d_A": 4.0,
+        "purity": 0.6884789700393282
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.4648620672612455,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 27,
+      "E": -0.2793514750646666,
+      "row_delocalization": 0.6733296475779981,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.005249397912246095,
+        "1": 0.2272324424672851,
+        "2": 0.32676533693766635,
+        "3": 0.4089249495994546,
+        "4": 0.031827873083347884
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.200562373626468,
+        "2": 1.8214459888138688,
+        "3": 1.7323876319260887,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.2982924274743346,
+        "2": 3.534352632305715,
+        "3": 3.322772758879206,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.5359595008421101,
+        "2": 0.8012550053631048,
+        "3": 0.39886912554446907,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.6116077919868301,
+        "d_A": 4.0,
+        "purity": 0.5412941560098774
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.700790249087074,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 28,
+      "E": -0.3253820725686666,
+      "row_delocalization": 0.6863226220335932,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.01592958998031306,
+        "1": 0.20085071049646339,
+        "2": 0.3238816966682104,
+        "3": 0.4067107540629189,
+        "4": 0.05262724879209467
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.6443505609020983,
+        "2": 1.7075394288036618,
+        "3": 1.8217546179425885,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.1260710333494686,
+        "2": 3.266033137728916,
+        "3": 3.5351088010220852,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.18555923798764268,
+        "2": 0.6412062959027028,
+        "3": 0.30529023349951084,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5568610503028806,
+        "d_A": 4.0,
+        "purity": 0.5823542122728396
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.6430753672326105,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 29,
+      "E": -0.26266526064800005,
+      "row_delocalization": 0.6949097707284065,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.03234004035262372,
+        "1": 0.31091934722213643,
+        "2": 0.3628071703776671,
+        "3": 0.2745324560981554,
+        "4": 0.019400985949417617
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.412284515773036,
+        "2": 2.301133451697513,
+        "3": 1.5632107667499007,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.661582924651579,
+        "2": 4.928448162373436,
+        "3": 2.9551078143604235,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.3870774701641633,
+        "2": 0.4279929476655186,
+        "3": 0.5704153753579762,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.6110043730775603,
+        "d_A": 4.0,
+        "purity": 0.5417467201918298
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.7308300234983793,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 30,
+      "E": -0.3593850531493334,
+      "row_delocalization": 0.6926560867122278,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.0199971249859639,
+        "1": 0.24027249080414165,
+        "2": 0.32598076431854506,
+        "3": 0.3762196146445798,
+        "4": 0.037530005246769874
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.711716327828451,
+        "2": 2.024496769934133,
+        "3": 1.8164565731542868,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.275502677273338,
+        "2": 4.0684993774299825,
+        "3": 3.5221505413071044,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.21955071693517866,
+        "2": 0.5039991341955539,
+        "3": 0.3298160592152674,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5971586058631102,
+        "d_A": 4.0,
+        "purity": 0.5521310456026673
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.713836979885902,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 31,
+      "E": -0.23587034891733336,
+      "row_delocalization": 0.6901664109809886,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.0034779911392910975,
+        "1": 0.209149786095701,
+        "2": 0.37148629248965126,
+        "3": 0.3521567657334651,
+        "4": 0.06372916454189176
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.332265152850657,
+        "2": 1.9429880562108515,
+        "3": 1.800914625661235,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.517977083369661,
+        "2": 3.8450118813244067,
+        "3": 3.4844105655658084,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.3519237016091755,
+        "2": 0.4106546722162949,
+        "3": 0.20721346517501638,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.5273687082865003,
+        "d_A": 4.0,
+        "purity": 0.6044734687851248
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5821526367210371,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 32,
+      "E": -0.33232406889533334,
+      "row_delocalization": 0.7030663778657793,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.029175897628669883,
+        "1": 0.22104188498356564,
+        "2": 0.34520295326870976,
+        "3": 0.3543021394260223,
+        "4": 0.050277124693032374
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.7651633640731552,
+        "2": 2.208853028425702,
+        "3": 1.8984500009457763,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.3991248758470545,
+        "2": 4.623075835937152,
+        "3": 3.728124400836103,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.09985230145370982,
+        "2": 0.4242919818758671,
+        "3": 0.4072056580278117,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.6169386963881165,
+        "d_A": 4.0,
+        "purity": 0.5372959777089126
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.751627568231873,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 33,
+      "E": -0.39009879852866675,
+      "row_delocalization": 0.6958840843940182,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.032458080239245145,
+        "1": 0.17879229920329015,
+        "2": 0.415140851429336,
+        "3": 0.30714145214628125,
+        "4": 0.06646731698184741
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.639798004569853,
+        "2": 2.052586788227543,
+        "3": 1.4444927369539076,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 3.1162219778704543,
+        "2": 4.148491379394064,
+        "3": 2.7216711035438057,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.3217494149678903,
+        "2": 0.5607407523721486,
+        "3": 0.3954177991877484,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.48837446150010894,
+        "d_A": 4.0,
+        "purity": 0.6337191538749183
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.5618384386816768,
+        "d_A": 4,
+        "d_B": 4
+      }
+    },
+    {
+      "iter": 34,
+      "E": -0.39714658438733347,
+      "row_delocalization": 0.673281776939227,
+      "row_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "row_probabilities": {
+        "0": 0.02601418002738496,
+        "1": 0.24258019068773262,
+        "2": 0.44897919254291946,
+        "3": 0.2546408939230842,
+        "4": 0.027785542818878912
+      },
+      "row_amplitude_entropy": {
+        "0": -0.0,
+        "1": 1.402544990769696,
+        "2": 2.04455754367462,
+        "3": 1.7747867872086385,
+        "4": -0.0
+      },
+      "row_effective_support": {
+        "0": 1.0,
+        "1": 2.6436752943593915,
+        "2": 4.125467294520327,
+        "3": 3.421874353922284,
+        "4": 1.0
+      },
+      "row_phase_alignment": {
+        "0": 1.0,
+        "1": 0.11291981645410044,
+        "2": 0.7384624229596909,
+        "3": 0.26731550346678085,
+        "4": 1.0
+      },
+      "bipartite_entanglement_linear": {
+        "value": 0.38088842123911404,
+        "d_A": 4.0,
+        "purity": 0.7143336840706644
+      },
+      "meta_resolved": {
+        "dims": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "grouping_requested": "hamming",
+        "grouping_resolved": "excitation",
+        "ordering_requested": "lex",
+        "ordering_resolved": "lex",
+        "A_subsystems": [
+          0,
+          1
+        ],
+        "eps": 1e-15
+      },
+      "aligned_separability_test": {
+        "rank_one": false,
+        "sigma_ratio": 0.4559617681121097,
+        "d_A": 4,
+        "d_B": 4
+      }
+    }
+  ]
+}
